@@ -1,0 +1,105 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:tasTest="clr-namespace:TAS_Test"
+        xmlns:viewModels="clr-namespace:TAS_Test.ViewModels"
+        xmlns:views2="clr-namespace:TAS_Test.Views"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="TAS_Test.MainWindow"
+        x:DataType="tasTest:MainWindow_ViewModel"
+        Title="TAS">
+    <Window.DataTemplates>
+        <DataTemplate DataType="viewModels:AllOrdersViewModel">
+            <views2:AllOrders />
+        </DataTemplate>
+
+        <DataTemplate DataType="viewModels:EditCustomerViewModel">
+            <views2:EditCustomer />
+        </DataTemplate>
+
+        <DataTemplate DataType="viewModels:EditOrderViewModel">
+            <views2:EditOrder />
+        </DataTemplate>
+
+        <DataTemplate DataType="viewModels:KundenlisteViewModel">
+            <views2:Kundenliste />
+        </DataTemplate>
+
+        <DataTemplate DataType="viewModels:NewCustomerViewModel">
+            <views2:NewCustomer />
+        </DataTemplate>
+
+        <DataTemplate DataType="viewModels:OrderArchiveViewModel">
+            <views2:OrderArchive />
+        </DataTemplate>
+
+        <DataTemplate DataType="viewModels:ShowOrderViewModel">
+            <views2:ShowOrder />
+        </DataTemplate>
+    </Window.DataTemplates>
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        
+        <!-- Sidebar -->
+        <Border Grid.Column="0" 
+                Background="#2D2D30" 
+                BorderBrush="#3E3E42" 
+                BorderThickness="0,0,1,0">
+            <StackPanel Margin="10">
+                <TextBlock Text="Navigation" 
+                          FontSize="16" 
+                          FontWeight="Bold" 
+                          Foreground="White"
+                          Margin="0,0,0,20"/>
+                
+                <Button Content="Kundenliste" 
+                        Command="{Binding Kundenliste}"
+                        Background="Transparent"
+                        Foreground="White"
+                        BorderThickness="0"
+                        HorizontalAlignment="Stretch"
+                        Padding="10,8"
+                        Margin="0,2"/>
+                
+                <Button Content="Alle Aufträge" 
+                        Command="{Binding Aufträge}"
+                        Background="Transparent"
+                        Foreground="White"
+                        BorderThickness="0"
+                        HorizontalAlignment="Stretch"
+                        Padding="10,8"
+                        Margin="0,2"/>
+                
+                <Button Content="Auftragsarchiv" 
+                        Command="{Binding Archiv}"
+                        Background="Transparent"
+                        Foreground="White"
+                        BorderThickness="0"
+                        HorizontalAlignment="Stretch"
+                        Padding="10,8"
+                        Margin="0,2"/>
+                
+                <Button Content="Einstellungen"
+                        Command="{Binding Einstellungen}"
+                        Background="Transparent"
+                        Foreground="White"
+                        BorderThickness="0"
+                        HorizontalAlignment="Stretch"
+                        Padding="10,8"
+                        Margin="0,2"/>
+            </StackPanel>
+        </Border>
+        
+        <!-- Hauptbereich -->
+        
+        <ContentControl Grid.Column="1" 
+                        Content="{Binding CurrentView}" >
+        </ContentControl>
+        
+    </Grid>
+</Window>

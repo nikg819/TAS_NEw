@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TAS_Test", "TAS_Test.csproj", "{CE7545B6-AC86-4097-8B39-3598FF8D11DE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CE7545B6-AC86-4097-8B39-3598FF8D11DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE7545B6-AC86-4097-8B39-3598FF8D11DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE7545B6-AC86-4097-8B39-3598FF8D11DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE7545B6-AC86-4097-8B39-3598FF8D11DE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
