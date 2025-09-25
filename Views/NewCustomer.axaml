@@ -1,0 +1,69 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModels1="clr-namespace:TAS_Test.ViewModels"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="TAS_Test.Views.NewCustomer"
+        x:DataType="viewModels1:NewCustomerViewModel"
+        >
+    
+    
+    
+    <Grid>
+        <!-- Hauptbereich -->
+        
+        <Border Background="#F5F5F5">
+            <StackPanel Margin="20">
+                <StackPanel Name="Kopfzeile">
+                    <TextBlock Text="Neuer Kunde" Name="Header"
+                               FontSize="24" 
+                               FontWeight="Bold"
+                               Foreground="Black"
+                               Margin="0,0,0,20"/>
+                    
+                    <TextBlock Text="" Name="Subheader"
+                               FontSize="12" 
+                               Foreground="Black"
+                               Margin="0,0,0,20"/>
+                    <TextBlock Text="" Name="InvisibleData"
+                               FontSize="1" 
+                               Foreground="Transparent"
+                               Margin="0"/>
+                </StackPanel>
+                
+                <Border Background="White"
+                        Margin="0,20,0,0"
+                        Padding="15"
+                        Name="BorderNewCustomer">
+                    
+                    <StackPanel Name="InputCustomer">
+                        <Grid ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto">
+                                
+                                <TextBlock Text="Name:*" Foreground="Black" Grid.Column="0" Grid.Row = "0" VerticalAlignment="Center"/>
+                                <TextBox Name="InputName" Margin="5" Width="180" HorizontalAlignment="Left" Grid.Column="1" Grid.Row = "0" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray" BorderBrush="Gray"/>
+                                <TextBlock Text="Fahrzeug:" Foreground="Black" Grid.Column="0" Grid.Row = "1" VerticalAlignment="Center"/>
+                                <TextBox Name="InputFahrzeug" Margin="5" Width="180" HorizontalAlignment="Left" Grid.Column="1" Grid.Row = "1" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray" BorderBrush="Gray"/>
+                                <TextBlock Text="Mailadresse:" Foreground="Black" Grid.Column="0" Grid.Row = "2" VerticalAlignment="Center"/>
+                                <TextBox Name="InputMail" Margin="5" Width="180" HorizontalAlignment="Left" Grid.Column="1" Grid.Row = "2" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray" BorderBrush="Gray"/>
+                                <TextBlock Text="Telefonnummer:" Foreground="Black" Grid.Column="0" Grid.Row = "3" VerticalAlignment="Center"/>
+                                <TextBox Name="InputPhone" Margin="5" Width="180" HorizontalAlignment="Left" Grid.Column="1" Grid.Row = "3" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray" BorderBrush="Gray"/>
+                                <TextBlock Text="Bemerkungen:" Foreground="Black" Grid.Column="0" Grid.Row = "4" VerticalAlignment="Center"/>
+                                <TextBox Name="InputNotes" Margin="5" Width="180" HorizontalAlignment="Left" Grid.Column="1" Grid.Row = "4" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray" Height="100" AcceptsReturn="True" TextWrapping="Wrap" BorderBrush="Gray"/>
+                                
+                        </Grid>
+                    </StackPanel>
+                </Border>
+                <Button Content="Speichern"
+                        Name="AddNewCustomer"
+                        Command="{Binding ButtonAddNewCustomer}"
+                        Background="LightGray"
+                        Foreground="Black"
+                        BorderThickness="0"
+                        HorizontalAlignment="Right"
+                        Padding="10,8"
+                        Margin="0,15"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

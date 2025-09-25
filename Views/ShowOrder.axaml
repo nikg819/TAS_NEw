@@ -1,0 +1,64 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModels1="clr-namespace:TAS_Test.ViewModels"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        Width="1250"
+        Height="630"
+        x:Class="TAS_Test.Views.ShowOrder"
+        x:DataType="viewModels1:ShowOrderViewModel"
+        >
+    
+    <Grid>
+         <!-- Hauptbereich -->
+        
+        <Border Background="#F5F5F5">
+            <StackPanel Margin="20">
+                <StackPanel Name="Kopfzeile">
+                    <TextBlock Text="" Name="Header"
+                               FontSize="24" 
+                               FontWeight="Bold"
+                               Foreground="Black"
+                               Margin="0,0,0,20"/>
+                    
+                    <TextBlock Text="" Name="Subheader"
+                               FontSize="12" 
+                               Foreground="Black"
+                               Margin="0,0,0,20"/>
+                    <TextBlock Text="" Name="InvisibleData"
+                               FontSize="1" 
+                               Foreground="Transparent"
+                               Margin="0"/>
+                </StackPanel>
+                <Border Background="White"
+                        Margin="0,20,0,0"
+                        Padding="15"
+                        Name="BorderShowOrder">
+                    <StackPanel Name="ShowOrderPanel">
+                        <Grid ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto">
+                                
+                            <TextBlock Text="Auftragsnummer:" Foreground="Black" Grid.Column="0" Grid.Row = "0" VerticalAlignment="Center"/>
+                            <TextBlock Name="ShowOrderOrderId" Margin="5" Width="180" HorizontalAlignment="Left" Grid.Column="1" Grid.Row = "0" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray"/>
+                            <TextBlock Text="Kunde:" Foreground="Black" Grid.Column="0" Grid.Row = "1" VerticalAlignment="Center"/>
+                            <TextBlock Name="ShowOrderKundenNamen" Margin="5" Width="180" HorizontalAlignment="Left" Grid.Column="1" Grid.Row = "1" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray"/>
+                            <TextBlock Text="Fahrzeug" Foreground="Black" Grid.Column="0" Grid.Row = "2" VerticalAlignment="Center"/>
+                            <TextBlock Name="ShowOrderKundenFahrzeug" Margin="5" Width="180" HorizontalAlignment="Left" Grid.Column="1" Grid.Row = "2" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray" />
+                            <TextBlock Text="Mailadresse:" Foreground="Black" Grid.Column="0" Grid.Row = "3" VerticalAlignment="Center"/>
+                            <TextBlock Name="ShowOrderKundenMail" Margin="5" Width="180" HorizontalAlignment="Left" Grid.Column="1" Grid.Row = "3" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray" />
+                            <TextBlock Text="Telefonnummer:" Foreground="Black" Grid.Column="0" Grid.Row = "4" VerticalAlignment="Center"/>
+                            <TextBlock Name="ShowOrderKundenPhone" Margin="5" Width="180" HorizontalAlignment="Left" Grid.Column="1" Grid.Row = "4" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray" />
+                            <TextBlock Text="Kundenbemerkung:" Foreground="Black" Grid.Column="0" Grid.Row = "5" VerticalAlignment="Center"/>
+                            <TextBlock Name="ShowOrderKundenbemerkungen" Margin="5" Width="400" HorizontalAlignment="Left" Grid.Column="1" Grid.Row = "5" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray" TextWrapping="Wrap"/>
+                            <TextBlock Text="Maximale Kosten:" Foreground="Black" Grid.Column="0" Grid.Row = "6" VerticalAlignment="Center"/>
+                            <TextBlock Name="ShowOrderMaximaleKosten" Margin="5" Width="180" HorizontalAlignment="Left" Grid.Column="1" Grid.Row = "6" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray"/>
+                            <TextBlock Text="Reparaturen:" Foreground="Black" Grid.Column="0" Grid.Row = "7" VerticalAlignment="Center"/>
+                            <TextBlock Name="ShowOrderReparaturen" Margin="5" Width="400" HorizontalAlignment="Left" Grid.Column="1" Grid.Row = "7" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray" TextWrapping="Wrap"/>
+                            
+                        </Grid>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

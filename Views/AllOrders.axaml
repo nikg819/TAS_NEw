@@ -1,0 +1,40 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModels1="clr-namespace:TAS_Test.ViewModels"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="TAS_Test.Views.AllOrders"
+        x:DataType="viewModels1:AllOrdersViewModel"
+        >
+    
+    <Grid>
+        <!-- Hauptbereich -->
+        
+        <Border Background="#F5F5F5">
+            <StackPanel Margin="20">
+                <StackPanel Name="Kopfzeile">
+                    <TextBlock Text="Aufträge" Name="Header"
+                               FontSize="24" 
+                               FontWeight="Bold"
+                               Foreground="Black"
+                               Margin="0,0,0,20"/>
+                    
+                    <TextBlock Text="" Name="Subheader"
+                               FontSize="12" 
+                               Foreground="Black"
+                               Margin="0,0,0,20"/>
+                    <TextBlock Text="" Name="InvisibleData"
+                               FontSize="1" 
+                               Foreground="Transparent"
+                               Margin="0"/>
+                     </StackPanel>
+                
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Height="400" Name="ScrollerListe">
+                    <StackPanel Name="StackpanelKundenliste">
+                    </StackPanel>
+                </ScrollViewer>
+            </StackPanel>    
+        </Border>       
+    </Grid>
+</UserControl>
