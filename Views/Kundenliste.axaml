@@ -8,34 +8,115 @@
         x:DataType="viewModels1:KundenlisteViewModel"
         >
     
-    <Grid>
+    
         <!-- Hauptbereich -->
         
         <Border Background="#F5F5F5">
-            <StackPanel Margin="20">
-                <StackPanel Name="Kopfzeile">
+                <Grid Margin="20">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                <StackPanel Name="Kopfzeile" Grid.Row="0">
                     <TextBlock Text="Kundenliste" Name="Header"
                                FontSize="24" 
                                FontWeight="Bold"
                                Foreground="Black"
                                Margin="0,0,0,20"/>
                     
-                    <TextBlock Text="" Name="Subheader"
+                    <TextBlock Text="{Binding Subheader}" Name="Subheader"
                                FontSize="12" 
                                Foreground="Black"
                                Margin="0,0,0,20"/>
-                    <TextBlock Text="" Name="InvisibleData"
-                               FontSize="1" 
-                               Foreground="Transparent"
-                               Margin="0"/>
-                    </StackPanel>
+                    <TextBox Name="Suche"
+                             Text="{Binding SearchText, Mode=TwoWay}"
+                             Margin="5" Width="200" 
+                             HorizontalAlignment="Left"  
+                             VerticalAlignment="Center" 
+                             Background="white" 
+                             Foreground="DimGray" 
+                             BorderBrush="LightGray" 
+                             Watermark="Suche...">
+                        <TextBox.KeyBindings>
+                            <KeyBinding Gesture="Enter" Command="{Binding SearchCommand}" CommandParameter="{Binding Text, ElementName=Suche}" />
+                        </TextBox.KeyBindings>
+                    </TextBox>
+                </StackPanel>
                 
-                <ScrollViewer VerticalScrollBarVisibility="Auto" Height="400" Name="ScrollerListe">
-                    <StackPanel Name="StackpanelKundenliste">
-                    </StackPanel>
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1">
+                    <ItemsControl ItemsSource="{Binding AllCustomers}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel/>      <!-- Das ItemsPanel stackt die einzelnen Einträge von AllCustomers übereinander -->
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+
+                        <ItemsControl.ItemTemplate> <!-- Zeigt wie jedes einzelne Element auszusehen hat -->
+                            <DataTemplate>
+                                <Border BorderThickness="0"
+                                        BorderBrush="Gray"
+                                        Margin="5"
+                                        Padding="10"
+                                        Background="White">
+                                    <Grid ColumnDefinitions="50,*,*,*,*,*,Auto,Auto,Auto">
+                                        <TextBlock Text="{Binding k_id}" Grid.Column="0" Foreground="Gray" TextWrapping="Wrap" />
+                                        <TextBlock Text="{Binding name}" Grid.Column="1" Foreground="Gray" TextWrapping="Wrap" />
+                                        <TextBlock Text="{Binding fahrzeug}" Grid.Column="2" Foreground="Gray" TextWrapping="Wrap"/>
+                                        <TextBlock Text="{Binding mail}" Grid.Column="3" Foreground="Gray" TextWrapping="Wrap"/>
+                                        <TextBlock Text="{Binding phone}" Grid.Column="4" Foreground="Gray" TextWrapping="Wrap"/>
+                                        <TextBlock Text="{Binding notes}" Grid.Column="5" Foreground="Gray" TextWrapping="Wrap"/>
+                                        
+                                        <Button Content="Edit" 
+                                            Grid.Column="6"
+                                            Background="LightBlue"
+                                            Foreground="DarkBlue"
+                                            BorderThickness="0"
+                                            Padding="10,5"
+                                            Margin="5,0"
+                                            CornerRadius="3"
+                                            FontSize="12"
+                                            VerticalAlignment="Center"
+                                            Command="{Binding $parent[ItemsControl].((viewModels1:KundenlisteViewModel)DataContext).EditCommand}"
+                                            CommandParameter="{Binding}" 
+                                            ToolTip.Tip="Kunde bearbeiten"/>
+                                        
+                                        <Button Content="Del" 
+                                                Grid.Column="7"
+                                                Background="LightCoral"
+                                                Foreground="DarkRed"
+                                                BorderThickness="0"
+                                                Padding="10,5"
+                                                Margin="5,0"
+                                                CornerRadius="3"
+                                                FontSize="12"
+                                                VerticalAlignment="Center"
+                                                Command="{Binding $parent[ItemsControl].((viewModels1:KundenlisteViewModel)DataContext).DeleteCommand}"
+                                                CommandParameter="{Binding}"
+                                                ToolTip.Tip="Kunde löschen"/>
+                                        
+                                        <Button Content="Order" 
+                                                Grid.Column="8"
+                                                Background="LightGreen"
+                                                Foreground="DarkGreen"
+                                                BorderThickness="0"
+                                                Padding="10,5"
+                                                Margin="5,0"
+                                                CornerRadius="3"
+                                                FontSize="12"
+                                                VerticalAlignment="Center"
+                                                Command="{Binding $parent[ItemsControl].((viewModels1:KundenlisteViewModel)DataContext).NewOrderCommand}"
+                                                CommandParameter="{Binding}"
+                                                ToolTip.Tip="Neuen Auftrag erstellen"/>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
                 </ScrollViewer>
                 
-                <Button Content="Neuer Kunde"
+                
+                <Button Content="Neuer Kunde" Grid.Row="2"
                         Name="NewCustomer"
                         Command="{Binding NewCustomer}"
                         Background="LightGray"
@@ -44,8 +125,6 @@
                         HorizontalAlignment="Right"
                         Padding="10,8"
                         Margin="0,15"/>
-                
-            </StackPanel>
+                </Grid>
         </Border>
-    </Grid>
 </UserControl>

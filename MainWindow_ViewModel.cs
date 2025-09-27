@@ -28,16 +28,28 @@ public class MainWindow_ViewModel : ReactiveObject
         Aufträge = ReactiveCommand.Create(OpenOrders);
         Archiv = ReactiveCommand.Create(OpenArchive);
         Einstellungen = ReactiveCommand.Create(OpenSettings);
+        TASStart();
         OpenCustomerlist();
     }
 
+    private void TASStart()
+    {
+        var db = new Database.Database();
+        if (!db.TestConnection())
+        {
+            Console.WriteLine("TestConnection failed");
+            Environment.Exit(1);
+        }
+    }
     private void OpenCustomerlist()
     {
         var kundenliste = new KundenlisteViewModel();
+        kundenliste.Navigate = vm => CurrentView = vm;
+
         Console.WriteLine("Open Kundenliste");
-        kundenliste.Navigate = _navigateAction;
         CurrentView = kundenliste;
     }
+    
     private void OpenOrders()
     {
         Console.WriteLine("Open Auftrag");
@@ -52,6 +64,7 @@ public class MainWindow_ViewModel : ReactiveObject
     {
         Console.WriteLine("Open Einstellungen, mehr gibt es hier nicht");
     }
+    
     
 
     
