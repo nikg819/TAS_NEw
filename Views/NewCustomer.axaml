@@ -26,10 +26,7 @@
                                 FontSize="12" 
                                 Foreground="Black"
                                 Margin="0,0,0,20"/>
-                    <TextBlock Text="" Name="InvisibleData"
-                               FontSize="1" 
-                               Foreground="Transparent"
-                               Margin="0"/>
+                    
                 </StackPanel>
                 
                 <Border Background="White"
@@ -63,6 +60,7 @@
                         HorizontalAlignment="Right"
                         Padding="10,8"
                         Margin="0,15"/>
+                
             </StackPanel>
         </Border>
     </Grid>

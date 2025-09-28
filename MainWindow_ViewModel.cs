@@ -41,7 +41,7 @@ public class MainWindow_ViewModel : ReactiveObject
             Environment.Exit(1);
         }
     }
-    private void OpenCustomerlist()
+    public void OpenCustomerlist()
     {
         var kundenlistevm = new KundenlisteViewModel();
         kundenlistevm.Navigate = _navigateAction;

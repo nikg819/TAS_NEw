@@ -2,6 +2,7 @@ using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using TAS_Test.Models;
 using TAS_Test.ViewModels;
 
@@ -118,6 +119,71 @@ namespace TAS_Test.Database
             command.ExecuteNonQuery();
             
             
+        }
+        
+        //Updatet Kunden
+        public void UpdateCustomer(int id, string name, string fahrzeug, string mail, string phone, string notes)
+        {
+            using var connection = new SqliteConnection($"Data Source={_dbPath}");
+            connection.Open();
+
+            using var command = connection.CreateCommand();
+            command.CommandText = @"UPDATE kundendaten SET name=@name, fahrzeug=@fahrzeug, mail=@mail, phone=@phone, notes=@notes WHERE k_id=@id";
+            
+            command.Parameters.AddWithValue("@name",name);
+            command.Parameters.AddWithValue("@fahrzeug",fahrzeug);
+            command.Parameters.AddWithValue("@mail",mail);
+            command.Parameters.AddWithValue("@phone",phone);
+            command.Parameters.AddWithValue("@notes",notes);
+            command.Parameters.AddWithValue("@id",id);
+            command.ExecuteNonQuery();
+
+        }
+        
+        //Kunden anhand von ID löschen
+        public async Task DeleteCustomer(int id)
+        {
+            using var connection = new SqliteConnection($"Data Source={_dbPath}");
+            connection.Open();
+
+            using var command = connection.CreateCommand();
+            command.CommandText = "DELETE FROM kundendaten WHERE k_id=@id";
+            
+            command.Parameters.AddWithValue("@id", id);
+            
+            command.ExecuteNonQuery();
+        }
+        
+        //Gibt Liste aller Aufträge an
+        public List<Order> GetAllOrders()
+        {
+            var orderliste = new List<Order>();
+
+            using var connection = new SqliteConnection($"Data Source={_dbPath}");
+            connection.Open();
+
+            using var command = connection.CreateCommand();
+            command.CommandText = "SELECT o.order_id, o.auftragsdatum, o.max_kosten, o.status, o.auftragsnamen, k.k_id, k.name, k.fahrzeug FROM 'order' AS o JOIN kundendaten AS k ON o.k_id = k.k_id;";
+            
+            using var reader = command.ExecuteReader();
+            
+            while (reader.Read())
+            {
+                orderliste.Add(new Order
+                {
+                    order_id = reader.GetInt32(0),
+                    auftragsdatum = reader.IsDBNull(1) ? null : reader.GetString(1),
+                    maxKosten = reader.IsDBNull(1) ? null : reader.GetString(2),
+                    status = reader.IsDBNull(2) ? null : reader.GetString(3),
+                    auftragsnamen = reader.IsDBNull(4) ? null : reader.GetString(4),
+                    k_id = reader.GetInt32(5),
+                    name = reader.IsDBNull(6) ? null : reader.GetString(6),
+                    fahrzeug = reader.IsDBNull(7) ? null : reader.GetString(7),
+                    
+                });
+            }
+
+            return orderliste;
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using ReactiveUI;
 using System.Reactive;
 using TAS_Test.Models;
+using TAS_Test.Views;
 
 namespace TAS_Test.ViewModels;
 
@@ -70,9 +71,11 @@ public class KundenlisteViewModel : ReactiveObject
             var searchList = db.FindCustomerBySearch(searchText);
             Subheader = $"Anzahl Personen: {searchList.Count}";
             AllCustomers = new ObservableCollection<Customer>(searchList);
+            SearchText = "";
         }
         else
         {
+            SearchText = "";
             CreateCustomerlist();
         }
     }
@@ -80,11 +83,17 @@ public class KundenlisteViewModel : ReactiveObject
     private void EditCustomer(Customer customer)
     {
         Console.WriteLine($"Edit {customer.name}");
+        var editcustomervm = new EditCustomerViewModel(customer); //hier wird customer übergeben 
+        editcustomervm.Navigate = Navigate;
+        Navigate?.Invoke(editcustomervm);
     }
 
     private void DeleteCustomer(Customer customer)
     {
-        Console.WriteLine($"Delete {customer.name}");
+        string message = $"Willst du {customer.name} löschen?";
+        var infowindow = new InfoWindow();
+        infowindow.DataContext = new InfoViewModel(infowindow, message, customer.k_id);
+        infowindow.Show();
     }
 
     private void NewOrder(Customer customer)
@@ -94,6 +103,7 @@ public class KundenlisteViewModel : ReactiveObject
 
     public void CreateCustomerlist()
     {
+        Console.WriteLine("Create Customerlist");
         var db = new Database.Database();
         var allPersons = db.GetAllPersons();
         Subheader = $"Anzahl Personen: {allPersons.Count}";

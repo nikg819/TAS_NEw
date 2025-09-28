@@ -8,11 +8,15 @@
         x:DataType="viewModels1:AllOrdersViewModel"
         >
     
-    <Grid>
+    
         <!-- Hauptbereich -->
         
         <Border Background="#F5F5F5">
-            <StackPanel Margin="20">
+            <Grid Margin="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
                 <StackPanel Name="Kopfzeile">
                     <TextBlock Text="Aufträge" Name="Header"
                                FontSize="24" 
@@ -20,7 +24,7 @@
                                Foreground="Black"
                                Margin="0,0,0,20"/>
                     
-                    <TextBlock Text="" Name="Subheader"
+                    <TextBlock Text="{Binding Subheader}" Name="Subheader"
                                FontSize="12" 
                                Foreground="Black"
                                Margin="0,0,0,20"/>
@@ -28,13 +32,106 @@
                                FontSize="1" 
                                Foreground="Transparent"
                                Margin="0"/>
+                    <TextBox Name="Suche"
+                             Text="{Binding SearchText, Mode=TwoWay}"
+                             Margin="5" Width="200" 
+                             HorizontalAlignment="Left"  
+                             VerticalAlignment="Center" 
+                             Background="white" 
+                             Foreground="DimGray" 
+                             BorderBrush="LightGray" 
+                             Watermark="Suche...">
+                        <TextBox.KeyBindings>
+                            <KeyBinding Gesture="Enter" Command="{Binding SearchCommand}" CommandParameter="{Binding Text, ElementName=Suche}" />
+                        </TextBox.KeyBindings>
+                    </TextBox>
                      </StackPanel>
                 
-                <ScrollViewer VerticalScrollBarVisibility="Auto" Height="400" Name="ScrollerListe">
-                    <StackPanel Name="StackpanelKundenliste">
-                    </StackPanel>
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1">
+                    <ItemsControl ItemsSource="{Binding AllOrders}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel/>      <!-- Das ItemsPanel stackt die einzelnen Einträge von AllCustomers übereinander -->
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+
+                        <ItemsControl.ItemTemplate> <!-- Zeigt wie jedes einzelne Element auszusehen hat -->
+                            <DataTemplate>
+                                <Border BorderThickness="0"
+                                        BorderBrush="Gray"
+                                        Margin="5"
+                                        Padding="10"
+                                        Background="White">
+                                    <Grid ColumnDefinitions="50,*,*,*,*,*,Auto,Auto,Auto,Auto">
+                                        <TextBlock Text="{Binding order_id}" Grid.Column="0" Foreground="Gray" TextWrapping="Wrap" />
+                                        <TextBlock Text="{Binding name}" Grid.Column="1" Foreground="Gray" TextWrapping="Wrap"/>
+                                        <TextBlock Text="{Binding auftragsnamen}" Grid.Column="2" Foreground="Gray" TextWrapping="Wrap" />
+                                        <TextBlock Text="{Binding fahrzeug}" Grid.Column="3" Foreground="Gray" TextWrapping="Wrap"/>
+                                        <TextBlock Text="{Binding auftragsdatum}" Grid.Column="4" Foreground="Gray" TextWrapping="Wrap"/>
+                                        <TextBlock Text="{Binding maxKosten}" Grid.Column="5" Foreground="Gray" TextWrapping="Wrap"/>
+                                        
+                                        <Button Content="Edit" 
+                                            Grid.Column="6"
+                                            Background="LightBlue"
+                                            Foreground="DarkBlue"
+                                            BorderThickness="0"
+                                            Padding="10,5"
+                                            Margin="5,0"
+                                            CornerRadius="3"
+                                            FontSize="12"
+                                            VerticalAlignment="Center"
+                                            Command="{Binding $parent[ItemsControl].((viewModels1:AllOrdersViewModel)DataContext).EditCommand}"
+                                            CommandParameter="{Binding}" 
+                                            ToolTip.Tip="Auftrag bearbeiten"/>
+                                        
+                                        <Button Content="Del" 
+                                                Grid.Column="7"
+                                                Background="LightCoral"
+                                                Foreground="DarkRed"
+                                                BorderThickness="0"
+                                                Padding="10,5"
+                                                Margin="5,0"
+                                                CornerRadius="3"
+                                                FontSize="12"
+                                                VerticalAlignment="Center"
+                                                Command="{Binding $parent[ItemsControl].((viewModels1:AllOrdersViewModel)DataContext).DeleteCommand}"
+                                                CommandParameter="{Binding}"
+                                                ToolTip.Tip="Auftrag löschen"/>
+                                        
+                                        <Button Content="Show" 
+                                                Grid.Column="8"
+                                                Background="LightGreen"
+                                                Foreground="DarkGreen"
+                                                BorderThickness="0"
+                                                Padding="10,5"
+                                                Margin="5,0"
+                                                CornerRadius="3"
+                                                FontSize="12"
+                                                VerticalAlignment="Center"
+                                                Command="{Binding $parent[ItemsControl].((viewModels1:AllOrdersViewModel)DataContext).ShowCommand}"
+                                                CommandParameter="{Binding}"
+                                                ToolTip.Tip="Auftrag anzeigen"/>
+                                        
+                                        <Button Content="Print" 
+                                                Grid.Column="9"
+                                                Background="Transparent"
+                                                Foreground="Black"
+                                                BorderBrush="Black"
+                                                BorderThickness="1"
+                                                Padding="10,5"
+                                                Margin="5,0"
+                                                CornerRadius="3"
+                                                FontSize="12"
+                                                VerticalAlignment="Center"
+                                                Command="{Binding $parent[ItemsControl].((viewModels1:AllOrdersViewModel)DataContext).PrintCommand}"
+                                                CommandParameter="{Binding}"
+                                                ToolTip.Tip="Auftrag als PDF erstellen"/>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
                 </ScrollViewer>
-            </StackPanel>    
+            </Grid>
         </Border>       
-    </Grid>
 </UserControl>

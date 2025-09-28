@@ -1,0 +1,41 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:viewModels1="clr-namespace:TAS_Test.ViewModels"
+        x:Class="TAS_Test.Views.InfoWindow"
+        x:DataType="viewModels1:InfoViewModel"
+        Width="300" Height="150"
+        WindowStartupLocation="CenterScreen"
+        CanResize="False"
+        Title="Info"
+        Background="#F5F5F5">
+
+    <StackPanel Margin="20" VerticalAlignment="Center" >
+        <TextBlock Text="{Binding Message}" TextWrapping="Wrap" FontSize="16" Margin="0,0,0,10" Foreground="Black" HorizontalAlignment="Center"/>
+        <Grid HorizontalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" 
+                    Content="Ja" 
+                    Command="{Binding JaCommand}"
+                    Width="60"
+                    Background="LightGray"
+                    Foreground="Black"
+                    BorderThickness="0"
+                    HorizontalContentAlignment="Center"
+                    Padding="10,8"
+                    Margin="0,15"/>
+            <Button Grid.Column="2" Content="Nein" 
+                    Command="{Binding NeinCommand}" 
+                    Width="60"
+                    Background="LightGray"
+                    Foreground="Black"
+                    BorderThickness="0"
+                    HorizontalContentAlignment="Center"
+                    Padding="10,8"
+                    Margin="0,15"/>
+        </Grid>
+    </StackPanel>
+</Window>
