@@ -43,14 +43,12 @@ public class MainWindow_ViewModel : ReactiveObject
     }
     private void OpenCustomerlist()
     {
-        var kundenliste = new KundenlisteViewModel();
-        kundenliste.Navigate = vm => CurrentView = vm;
-
-        Console.WriteLine("Open Kundenliste");
-        CurrentView = kundenliste;
+        var kundenlistevm = new KundenlisteViewModel();
+        kundenlistevm.Navigate = _navigateAction;
+        CurrentView = kundenlistevm;
     }
     
-    private void OpenOrders()
+    public void OpenOrders()
     {
         Console.WriteLine("Open Auftrag");
         CurrentView = new AllOrdersViewModel();

@@ -45,7 +45,7 @@ public class KundenlisteViewModel : ReactiveObject
     public KundenlisteViewModel()
     {
         SearchCommand = ReactiveCommand.Create<string>(SearchCustomer);
-        NewCustomer = ReactiveCommand.Create(NewCustomerSafeButton);
+        NewCustomer = ReactiveCommand.Create(NewCustomerButton);
         EditCommand = ReactiveCommand.Create<Customer>(EditCustomer);
         DeleteCommand = ReactiveCommand.Create<Customer>(DeleteCustomer);
         NewOrderCommand = ReactiveCommand.Create<Customer>(NewOrder);
@@ -54,17 +54,27 @@ public class KundenlisteViewModel : ReactiveObject
     }
 
     // Methoden
-    private void NewCustomerSafeButton()
+    private void NewCustomerButton()
     {
-        Console.WriteLine("Open Customer Input");
-        var newCustomer = new NewCustomerViewModel(){};
-        newCustomer.Navigate = Navigate; // Callback weiterreichen
+        Console.WriteLine("Open NewCustomer");
+        var newCustomer = new NewCustomerViewModel();
+        newCustomer.Navigate = Navigate;
         Navigate?.Invoke(newCustomer);
     }
 
     private void SearchCustomer(string searchText)
     {
-        Console.WriteLine($"Text:{searchText}");
+        if (!string.IsNullOrEmpty(searchText))
+        {
+            var db = new Database.Database();
+            var searchList = db.FindCustomerBySearch(searchText);
+            Subheader = $"Anzahl Personen: {searchList.Count}";
+            AllCustomers = new ObservableCollection<Customer>(searchList);
+        }
+        else
+        {
+            CreateCustomerlist();
+        }
     }
 
     private void EditCustomer(Customer customer)
@@ -89,4 +99,6 @@ public class KundenlisteViewModel : ReactiveObject
         Subheader = $"Anzahl Personen: {allPersons.Count}";
         AllCustomers = new ObservableCollection<Customer>(allPersons);
     }
+    
 }
+

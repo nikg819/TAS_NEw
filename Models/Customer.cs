@@ -18,5 +18,14 @@ public class Customer : ReactiveObject
     public string? notes {get; set;}
     public Customer() { }
     
+    public Customer(int k_id, string name, string fahrzeug, string mail, string phone, string? notes = "")
+    {
+        this.k_id = k_id;
+        this.name = name ?? "";
+        this.fahrzeug = fahrzeug ?? "";
+        this.mail = mail ?? "";
+        this.phone = phone ?? "";
+        this.notes = notes ?? "";
+    }
 }
 

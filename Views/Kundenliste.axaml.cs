@@ -8,7 +8,6 @@ public partial class Kundenliste : UserControl
     public Kundenliste()
     {
         InitializeComponent();
-        DataContext = new KundenlisteViewModel();
 
     }
 }

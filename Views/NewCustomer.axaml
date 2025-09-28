@@ -22,10 +22,10 @@
                                Foreground="Black"
                                Margin="0,0,0,20"/>
                     
-                    <TextBlock Text="" Name="Subheader"
-                               FontSize="12" 
-                               Foreground="Black"
-                               Margin="0,0,0,20"/>
+                    <TextBlock Text="{Binding Subheader}" Name="Subheader"
+                                FontSize="12" 
+                                Foreground="Black"
+                                Margin="0,0,0,20"/>
                     <TextBlock Text="" Name="InvisibleData"
                                FontSize="1" 
                                Foreground="Transparent"
@@ -41,15 +41,15 @@
                         <Grid ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto">
                                 
                                 <TextBlock Text="Name:*" Foreground="Black" Grid.Column="0" Grid.Row = "0" VerticalAlignment="Center"/>
-                                <TextBox Name="InputName" Margin="5" Width="180" HorizontalAlignment="Left" Grid.Column="1" Grid.Row = "0" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray" BorderBrush="Gray"/>
+                                <TextBox Name="InputName" Text="{Binding InputName, Mode=TwoWay}" Margin="5" Width="180" HorizontalAlignment="Left" Grid.Column="1" Grid.Row = "0" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray" BorderBrush="Gray"/>
                                 <TextBlock Text="Fahrzeug:" Foreground="Black" Grid.Column="0" Grid.Row = "1" VerticalAlignment="Center"/>
-                                <TextBox Name="InputFahrzeug" Margin="5" Width="180" HorizontalAlignment="Left" Grid.Column="1" Grid.Row = "1" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray" BorderBrush="Gray"/>
+                                <TextBox Name="InputFahrzeug" Text="{Binding InputFahrzeug, Mode=TwoWay}" Margin="5" Width="180" HorizontalAlignment="Left" Grid.Column="1" Grid.Row = "1" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray" BorderBrush="Gray"/>
                                 <TextBlock Text="Mailadresse:" Foreground="Black" Grid.Column="0" Grid.Row = "2" VerticalAlignment="Center"/>
-                                <TextBox Name="InputMail" Margin="5" Width="180" HorizontalAlignment="Left" Grid.Column="1" Grid.Row = "2" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray" BorderBrush="Gray"/>
+                                <TextBox Name="InputMail" Text="{Binding InputMail, Mode=TwoWay}" Margin="5" Width="180" HorizontalAlignment="Left" Grid.Column="1" Grid.Row = "2" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray" BorderBrush="Gray"/>
                                 <TextBlock Text="Telefonnummer:" Foreground="Black" Grid.Column="0" Grid.Row = "3" VerticalAlignment="Center"/>
-                                <TextBox Name="InputPhone" Margin="5" Width="180" HorizontalAlignment="Left" Grid.Column="1" Grid.Row = "3" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray" BorderBrush="Gray"/>
+                                <TextBox Name="InputPhone" Text="{Binding InputPhone, Mode=TwoWay}" Margin="5" Width="180" HorizontalAlignment="Left" Grid.Column="1" Grid.Row = "3" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray" BorderBrush="Gray"/>
                                 <TextBlock Text="Bemerkungen:" Foreground="Black" Grid.Column="0" Grid.Row = "4" VerticalAlignment="Center"/>
-                                <TextBox Name="InputNotes" Margin="5" Width="180" HorizontalAlignment="Left" Grid.Column="1" Grid.Row = "4" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray" Height="100" AcceptsReturn="True" TextWrapping="Wrap" BorderBrush="Gray"/>
+                                <TextBox Name="InputNotes" Text="{Binding InputNotes, Mode=TwoWay}" Margin="5" Width="180" HorizontalAlignment="Left" Grid.Column="1" Grid.Row = "4" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray" Height="100" AcceptsReturn="True" TextWrapping="Wrap" BorderBrush="Gray"/>
                                 
                         </Grid>
                     </StackPanel>
