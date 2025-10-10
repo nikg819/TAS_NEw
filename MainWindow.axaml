@@ -37,6 +37,9 @@
         <DataTemplate DataType="viewModels:ShowOrderViewModel">
             <views2:ShowOrder />
         </DataTemplate>
+        <DataTemplate DataType="viewModels:NewOrderViewModel">
+            <views2:NewOrder />
+        </DataTemplate>
     </Window.DataTemplates>
     
     <Grid>
@@ -51,7 +54,7 @@
                 BorderBrush="#3E3E42" 
                 BorderThickness="0,0,1,0">
             <StackPanel Margin="10">
-                <TextBlock Text="Navigation" 
+                <TextBlock Text="Menü" 
                           FontSize="16" 
                           FontWeight="Bold" 
                           Foreground="White"

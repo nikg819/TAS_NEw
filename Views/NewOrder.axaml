@@ -1,0 +1,63 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModels1="clr-namespace:TAS_Test.ViewModels"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="TAS_Test.Views.NewOrder"
+        x:DataType="viewModels1:NewOrderViewModel"
+        >
+    
+    <Grid>
+        <!-- Hauptbereich -->
+        
+        <Border Background="#F5F5F5">
+            <StackPanel Margin="20">
+                <StackPanel Name="Kopfzeile">
+                    <TextBlock Text="{Binding Header}" Name="Header"
+                               FontSize="24" 
+                               FontWeight="Bold"
+                               Foreground="Black"
+                               Margin="0,0,0,20"/>
+                    
+                    <TextBlock Text="{Binding Subheader}" Name="Subheader"
+                                FontSize="12" 
+                                Foreground="Black"
+                                Margin="0,0,0,20"/>
+                    
+                </StackPanel>
+                
+                <Border Background="White"
+                        Margin="0,20,0,0"
+                        Padding="15"
+                        Name="BorderNewOrder">
+                    
+                    <StackPanel Name="InputOrder">
+                        <Grid ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto, Auto, Auto">
+                                
+                                <TextBlock Text="Auftragsnamen:" Foreground="Black" Grid.Column="0" Grid.Row = "0" VerticalAlignment="Center"/>
+                                <TextBox Name="InputAuftragsnamen" Text="{Binding InputAuftragsnamen, Mode=TwoWay}" Margin="5" Width="180" HorizontalAlignment="Left" Grid.Column="1" Grid.Row = "0" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray" BorderBrush="Gray" TextWrapping="Wrap" AcceptsReturn="True"/>
+                                <TextBlock Text="Auftragsdatum:" Foreground="Black" Grid.Column="0" Grid.Row = "1" VerticalAlignment="Center"/>
+                                <TextBox Name="InputAuftragsdatum" Text="{Binding InputAuftragsdatum, Mode=TwoWay}" Margin="5" Width="180" HorizontalAlignment="Left" Grid.Column="1" Grid.Row = "1" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray" BorderBrush="Gray" TextWrapping="Wrap" AcceptsReturn="True"/>
+                                <TextBlock Text="Reparaturen:" Foreground="Black" Grid.Column="0" Grid.Row = "2" VerticalAlignment="Center"/>
+                                <TextBox Name="InputReparaturen" Text="{Binding InputReparaturen, Mode=TwoWay}" Margin="5" Width="180" Height="100" HorizontalAlignment="Left" Grid.Column="1" Grid.Row = "2" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray" BorderBrush="Gray" TextWrapping="Wrap" AcceptsReturn="True"/>
+                                <TextBlock Text="Maximale Kosten:" Foreground="Black" Grid.Column="0" Grid.Row = "3" VerticalAlignment="Center"/>
+                                <TextBox Name="InputMaximaleKosten" Text="{Binding InputMaximaleKosten, Mode=TwoWay}" Margin="5" Width="180"  HorizontalAlignment="Left" Grid.Column="1" Grid.Row = "3" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray" BorderBrush="Gray" TextWrapping="Wrap" AcceptsReturn="True"/>
+                                
+                        </Grid>
+                    </StackPanel>
+                </Border>
+                <Button Content="Speichern"
+                        Name="AddNewOrder"
+                        Command="{Binding ButtonAddNewOrder}"
+                        Background="LightGray"
+                        Foreground="Black"
+                        BorderThickness="0"
+                        HorizontalAlignment="Right"
+                        Padding="10,8"
+                        Margin="0,15"/>
+                
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

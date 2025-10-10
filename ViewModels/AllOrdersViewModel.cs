@@ -31,6 +31,7 @@ public class AllOrdersViewModel : ReactiveObject
         set => this.RaiseAndSetIfChanged(ref _searchText, value);
     }
     public ReactiveCommand<string, Unit> SearchCommand { get; }
+    public ReactiveCommand<Order, Unit> ErledigtCommand { get; }
     public ReactiveCommand<Order, Unit> EditCommand { get; }
     public ReactiveCommand<Order, Unit> DeleteCommand { get; }
     public ReactiveCommand<Order, Unit> ShowCommand { get; }
@@ -39,6 +40,7 @@ public class AllOrdersViewModel : ReactiveObject
     public AllOrdersViewModel()
     {
         SearchCommand = ReactiveCommand.Create<string>(SearchOrder);
+        ErledigtCommand = ReactiveCommand.Create<Order>(ErledigtOrder);
         EditCommand = ReactiveCommand.Create<Order>(EditOrder);
         DeleteCommand = ReactiveCommand.Create<Order>(DeleteOrder);
         ShowCommand = ReactiveCommand.Create<Order>(ShowOrder);
@@ -49,8 +51,26 @@ public class AllOrdersViewModel : ReactiveObject
 
     private void SearchOrder(string searchText)
     {
-        Console.WriteLine($"Searching: {searchText}");
+        if (!string.IsNullOrEmpty(searchText))
+        {
+            var db = new Database.Database();
+            var searchList = db.FindOrderBySearch(searchText);
+            Subheader = $"Anzahl Aufträge: {searchList.Count}";
+            AllOrders = new ObservableCollection<Order>(searchList);
+            SearchText = "";
+        }
+        else
+        {
+            SearchText = "";
+            CreateOrderlist();
+        }
     }
+
+    private void ErledigtOrder(Order order)
+    {
+        Console.WriteLine("ErledigtOrder");
+    }
+
     private void EditOrder(Order order)
     {
         Console.WriteLine($"Edit {order.auftragsnamen}");

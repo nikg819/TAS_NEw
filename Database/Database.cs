@@ -5,6 +5,7 @@ using System.IO;
 using System.Threading.Tasks;
 using TAS_Test.Models;
 using TAS_Test.ViewModels;
+using TAS_Test.Views;
 
 namespace TAS_Test.Database
 {
@@ -117,8 +118,6 @@ namespace TAS_Test.Database
             command.Parameters.AddWithValue("$notes", k.notes);
             
             command.ExecuteNonQuery();
-            
-            
         }
         
         //Updatet Kunden
@@ -141,18 +140,28 @@ namespace TAS_Test.Database
         }
         
         //Kunden anhand von ID löschen
-        public async Task DeleteCustomer(int id)
+        public async Task<bool> DeleteCustomer(int id)
         {
-            using var connection = new SqliteConnection($"Data Source={_dbPath}");
-            connection.Open();
+            try
+            {
+                using var connection = new SqliteConnection($"Data Source={_dbPath}");
+                connection.Open();
 
-            using var command = connection.CreateCommand();
-            command.CommandText = "DELETE FROM kundendaten WHERE k_id=@id";
-            
-            command.Parameters.AddWithValue("@id", id);
-            
-            command.ExecuteNonQuery();
+                using var command = connection.CreateCommand();
+                command.CommandText = "DELETE FROM kundendaten WHERE k_id=@id";
+
+                command.Parameters.AddWithValue("@id", id);
+
+                command.ExecuteNonQuery();
+                return true;
+            }
+            catch (SqliteException e)
+            {
+                return false;
+            }
         }
+        
+        //----------------------------------------aufträge------------------------------------
         
         //Gibt Liste aller Aufträge an
         public List<Order> GetAllOrders()
@@ -163,7 +172,7 @@ namespace TAS_Test.Database
             connection.Open();
 
             using var command = connection.CreateCommand();
-            command.CommandText = "SELECT o.order_id, o.auftragsdatum, o.max_kosten, o.status, o.auftragsnamen, k.k_id, k.name, k.fahrzeug FROM 'order' AS o JOIN kundendaten AS k ON o.k_id = k.k_id;";
+            command.CommandText = "SELECT o.order_id, o.auftragsdatum, o.max_kosten, o.status, o.auftragsnamen, k.k_id, k.name, k.fahrzeug FROM 'order' AS o JOIN kundendaten AS k ON o.k_id = k.k_id WHERE o.status = 1;";
             
             using var reader = command.ExecuteReader();
             
@@ -184,6 +193,159 @@ namespace TAS_Test.Database
             }
 
             return orderliste;
+        }
+        
+        //Sucht in allen aufträgen
+        public List<Order> FindOrderBySearch(string search)
+        {
+            using var connection = new SqliteConnection($"Data Source={_dbPath}");
+            connection.Open();
+
+            using var command = connection.CreateCommand();
+            command.CommandText = @"
+                        SELECT o.order_id, k.name, o.auftragsnamen, k.fahrzeug, o.auftragsdatum, o.max_kosten
+                        FROM 'order' AS o
+                        JOIN 'kundendaten' AS k ON o.k_id = k.k_id
+                        WHERE (CAST(o.order_id AS TEXT) LIKE @pattern
+                           OR k.name LIKE @pattern
+                           OR o.auftragsnamen LIKE @pattern
+                           OR k.fahrzeug LIKE @pattern
+                           OR o.auftragsdatum LIKE @pattern
+                           OR o.max_kosten LIKE @pattern)
+                            AND o.status = 1;";
+                           
+                           
+
+            command.Parameters.AddWithValue("@pattern", $"%{search}%");
+            
+            using var reader = command.ExecuteReader();
+            
+            var orderListe = new List<Order>();
+            
+            
+            while (reader.Read())
+            {
+                orderListe.Add(new Order
+                {
+                    order_id = reader.GetInt32(0),
+                    name = reader.IsDBNull(1) ? null : reader.GetString(1),
+                    auftragsnamen = reader.IsDBNull(2) ? null : reader.GetString(2),
+                    fahrzeug = reader.IsDBNull(3) ? null : reader.GetString(3),
+                    auftragsdatum = reader.IsDBNull(4) ? null : reader.GetString(4),
+                    maxKosten = reader.IsDBNull(5) ? null : reader.GetString(5)
+                });
+            }
+            return orderListe;
+            
+        }
+        
+        //Neuen Auftrag hinzufügen
+        public void AddOrder(Order newOrder)
+        {
+            using var connection = new SqliteConnection($"Data Source={_dbPath}");
+            connection.Open();
+
+            using (var pragma = connection.CreateCommand())
+            {
+                pragma.CommandText = "PRAGMA foreign_keys = ON;";
+                pragma.ExecuteNonQuery();
+            }
+            
+            using var command = connection.CreateCommand();
+            command.CommandText = @"INSERT INTO 'order' (auftragsdatum, max_kosten, status,k_id,reperaturen,auftragsnamen) VALUES ($auftragsdatum, $max_kosten, $status,$k_id,$reparaturen,$auftragsnamen)";
+            
+            command.Parameters.AddWithValue("$auftragsdatum", string.IsNullOrWhiteSpace(newOrder.auftragsdatum) ? DBNull.Value : newOrder.auftragsdatum);
+            command.Parameters.AddWithValue("$max_kosten", string.IsNullOrWhiteSpace(newOrder.maxKosten) ? DBNull.Value : newOrder.maxKosten);
+            command.Parameters.AddWithValue("$status", string.IsNullOrWhiteSpace(newOrder.status) ? DBNull.Value : newOrder.status);
+            command.Parameters.AddWithValue("$k_id", newOrder.k_id);
+            command.Parameters.AddWithValue("$auftragsnamen", string.IsNullOrWhiteSpace(newOrder.auftragsnamen) ? DBNull.Value : newOrder.auftragsnamen);
+            command.Parameters.AddWithValue("$reparaturen", string.IsNullOrWhiteSpace(newOrder.reparaturen) ? DBNull.Value : newOrder.reparaturen);
+            
+            command.ExecuteNonQuery();
+        }
+        
+        //setzt status von auftrag zu 0 für "Erledigt"
+        public void ChangeStatus(Order order)
+        {
+            
+        }
+        
+        //-----------------------------------------Archivaufträge----------------------------------
+        
+        //Liste mit allen erledigten Aufträgen
+        public List<Order> GetAllArchiveOrders()
+        {
+            var archiveorderliste = new List<Order>();
+
+            using var connection = new SqliteConnection($"Data Source={_dbPath}");
+            connection.Open();
+
+            using var command = connection.CreateCommand();
+            command.CommandText = "SELECT o.order_id, o.auftragsdatum, o.max_kosten, o.status, o.auftragsnamen, k.k_id, k.name, k.fahrzeug FROM 'order' AS o JOIN kundendaten AS k ON o.k_id = k.k_id WHERE o.status = 0;";
+            
+            using var reader = command.ExecuteReader();
+            
+            while (reader.Read())
+            {
+                archiveorderliste.Add(new Order
+                {
+                    order_id = reader.GetInt32(0),
+                    auftragsdatum = reader.IsDBNull(1) ? null : reader.GetString(1),
+                    maxKosten = reader.IsDBNull(1) ? null : reader.GetString(2),
+                    status = reader.IsDBNull(2) ? null : reader.GetString(3),
+                    auftragsnamen = reader.IsDBNull(4) ? null : reader.GetString(4),
+                    k_id = reader.GetInt32(5),
+                    name = reader.IsDBNull(6) ? null : reader.GetString(6),
+                    fahrzeug = reader.IsDBNull(7) ? null : reader.GetString(7),
+                    
+                });
+            }
+
+            return archiveorderliste;
+        }
+        
+        //Scucht in allen Archivaufträgen
+        public List<Order> FindArchiveOrderBySearch(string search)
+        {
+            using var connection = new SqliteConnection($"Data Source={_dbPath}");
+            connection.Open();
+
+            using var command = connection.CreateCommand();
+            command.CommandText = @"
+                        SELECT o.order_id, k.name, o.auftragsnamen, k.fahrzeug, o.auftragsdatum, o.max_kosten
+                        FROM 'order' AS o
+                        JOIN 'kundendaten' AS k ON o.k_id = k.k_id
+                        WHERE (CAST(o.order_id AS TEXT) LIKE @pattern
+                           OR k.name LIKE @pattern
+                           OR o.auftragsnamen LIKE @pattern
+                           OR k.fahrzeug LIKE @pattern
+                           OR o.auftragsdatum LIKE @pattern
+                           OR o.max_kosten LIKE @pattern)
+                            AND o.status = '0';";
+                           
+                           
+
+            command.Parameters.AddWithValue("@pattern", $"%{search}%");
+            
+            using var reader = command.ExecuteReader();
+            
+            var archiveorderListe = new List<Order>();
+            
+            
+            while (reader.Read())
+            {
+                archiveorderListe.Add(new Order
+                {
+                    order_id = reader.GetInt32(0),
+                    name = reader.IsDBNull(1) ? null : reader.GetString(1),
+                    auftragsnamen = reader.IsDBNull(2) ? null : reader.GetString(2),
+                    fahrzeug = reader.IsDBNull(3) ? null : reader.GetString(3),
+                    auftragsdatum = reader.IsDBNull(4) ? null : reader.GetString(4),
+                    maxKosten = reader.IsDBNull(5) ? null : reader.GetString(5)
+                });
+            }
+            return archiveorderListe;
+            
         }
     }
 }

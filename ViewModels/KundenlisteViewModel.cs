@@ -92,13 +92,17 @@ public class KundenlisteViewModel : ReactiveObject
     {
         string message = $"Willst du {customer.name} löschen?";
         var infowindow = new InfoWindow();
-        infowindow.DataContext = new InfoViewModel(infowindow, message, customer.k_id);
+        infowindow.DataContext = new InfoViewModel(infowindow, message, customer.k_id, this);
         infowindow.Show();
+       
     }
 
     private void NewOrder(Customer customer)
     {
         Console.WriteLine($"New Order for {customer.name}");
+        var newOrdervm = new NewOrderViewModel(customer);
+        newOrdervm.Navigate = Navigate;
+        Navigate?.Invoke(newOrdervm);
     }
 
     public void CreateCustomerlist()
@@ -109,6 +113,7 @@ public class KundenlisteViewModel : ReactiveObject
         Subheader = $"Anzahl Personen: {allPersons.Count}";
         AllCustomers = new ObservableCollection<Customer>(allPersons);
     }
+    
     
 }
 

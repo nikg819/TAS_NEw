@@ -14,27 +14,35 @@ public class InfoViewModel : ReactiveObject
     public ReactiveCommand<Unit, Unit> NeinCommand { get; }
     
     private readonly Window _window;
+    private readonly KundenlisteViewModel _kundenlistevm;
 
-    public InfoViewModel(Window window, string message,int customerID)
+    public InfoViewModel(Window window, string message,int customerID, KundenlisteViewModel kundenlistevm)
     {
         _window = window;
         Message = message;
+        _kundenlistevm = kundenlistevm;
 
         NeinCommand = ReactiveCommand.Create(() =>
         {
-            _window.Close(); // Fenster schließen
+            _window.Close();
         });
         JaCommand = ReactiveCommand.CreateFromTask(async () =>
         {
             var db = new Database.Database();
-            await db.DeleteCustomer(customerID);
-            Console.WriteLine("Kunde wird gelöscht");
-            _window.Close();
-            var kundenlistevm = new KundenlisteViewModel();
-            Console.WriteLine("Kundenliste gekunde");
-            kundenlistevm.CreateCustomerlist();
+            bool deleted = await db.DeleteCustomer(customerID);
+            if (deleted)
+            {
+                Console.WriteLine("Kunde wird gelöscht");
+                _kundenlistevm.CreateCustomerlist();
+                _window.Close();
+            }
+            else
+            {
+                _kundenlistevm.Subheader = "Der Kunde kann nicht gelöscht werden, da er noch offene Aufträge hat.";
+                _window.Close();
+            }
+            
         });
     }
-
     
 }
