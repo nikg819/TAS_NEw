@@ -267,7 +267,32 @@ namespace TAS_Test.Database
         //setzt status von auftrag zu 0 für "Erledigt"
         public void ChangeStatus(Order order)
         {
+            using var connection = new SqliteConnection($"Data Source={_dbPath}");
+            connection.Open();
+
+            using var command = connection.CreateCommand();
+            command.CommandText = @"UPDATE 'order' SET status=@status WHERE order_id=@id";
             
+            command.Parameters.AddWithValue("@status","0");
+            command.Parameters.AddWithValue("@id",order.order_id);
+            command.ExecuteNonQuery();
+        }
+        
+        //Updatet Auftrag
+        public void UpdateOrder(int orderId, string auftragsnamen, string auftragsdatum, string maxKosten, string reparaturen)
+        {
+            using var connection = new SqliteConnection($"Data Source={_dbPath}");
+            connection.Open();
+
+            using var command = connection.CreateCommand();
+            command.CommandText = @"UPDATE 'order' SET auftragsnamen=@name, auftragsdatum=@datum, reperaturen=@reparaturen, max_kosten=@maxKosten WHERE order_id=@id";
+            
+            command.Parameters.AddWithValue("@name", auftragsnamen ?? string.Empty);
+            command.Parameters.AddWithValue("@datum", auftragsdatum ?? string.Empty);
+            command.Parameters.AddWithValue("@reparaturen", reparaturen ?? string.Empty);
+            command.Parameters.AddWithValue("@maxKosten", maxKosten ?? string.Empty);
+            command.Parameters.AddWithValue("@id", orderId);
+            command.ExecuteNonQuery();
         }
         
         //-----------------------------------------Archivaufträge----------------------------------
@@ -346,6 +371,20 @@ namespace TAS_Test.Database
             }
             return archiveorderListe;
             
+        }
+        
+        //Reaktiviere Auftrag
+        public void ChangeReactivateStatus(Order order)
+        {
+            using var connection = new SqliteConnection($"Data Source={_dbPath}");
+            connection.Open();
+
+            using var command = connection.CreateCommand();
+            command.CommandText = @"UPDATE 'order' SET status=@status WHERE order_id=@id";
+            
+            command.Parameters.AddWithValue("@status","1");
+            command.Parameters.AddWithValue("@id",order.order_id);
+            command.ExecuteNonQuery();
         }
     }
 }

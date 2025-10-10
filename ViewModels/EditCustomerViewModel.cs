@@ -7,7 +7,6 @@ namespace TAS_Test.ViewModels;
 
 public class EditCustomerViewModel : ReactiveObject
 {
-    //Navigation
     public Action<ReactiveObject>? Navigate { get; set; }
     public string Header { get; set; } = "";
     public string Subheader { get; set; } = "";

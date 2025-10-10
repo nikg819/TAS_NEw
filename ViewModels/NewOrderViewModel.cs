@@ -53,7 +53,7 @@ public class NewOrderViewModel : ReactiveObject
         var kundenlistevm = new KundenlisteViewModel();
         kundenlistevm.CreateCustomerlist();
         Console.WriteLine("Kunde gespeichert und Open Kundenliste");
-        kundenlistevm.Navigate = Navigate; // wieder weiterreichen
+        kundenlistevm.Navigate = Navigate; 
         Navigate?.Invoke(kundenlistevm);
     }
     

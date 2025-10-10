@@ -72,9 +72,10 @@
                                         
                                         <Button Content="Reaktivieren" 
                                             Grid.Column="6"
-                                            Background="LightBlue"
-                                            Foreground="DarkBlue"
-                                            BorderThickness="0"
+                                            Background="Transparent"
+                                            Foreground="Black"
+                                            BorderBrush="LightGray"
+                                            BorderThickness="1"
                                             Padding="10,5"
                                             Margin="5,0"
                                             CornerRadius="3"

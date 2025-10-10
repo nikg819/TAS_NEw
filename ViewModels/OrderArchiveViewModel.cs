@@ -35,7 +35,7 @@ public class OrderArchiveViewModel : ReactiveObject
     public OrderArchiveViewModel()
     {
         ArchiveSearchCommand = ReactiveCommand.Create<string>(SearchOrder);
-        ReactivateCommand = ReactiveCommand.Create<Order>(EditOrder);
+        ReactivateCommand = ReactiveCommand.Create<Order>(ReactivateOrder);
         
         CreateArchiveOrderlist();
     }
@@ -57,9 +57,11 @@ public class OrderArchiveViewModel : ReactiveObject
         }
     }
 
-    private void EditOrder(Order order)
+    private void ReactivateOrder(Order order)
     {
-        Console.WriteLine($"Reaktiviere {order.auftragsnamen}");
+        var db = new Database.Database();
+        db.ChangeReactivateStatus(order);
+        CreateArchiveOrderlist();
     }
     
     public void CreateArchiveOrderlist()

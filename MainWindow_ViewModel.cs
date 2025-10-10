@@ -50,8 +50,9 @@ public class MainWindow_ViewModel : ReactiveObject
     
     public void OpenOrders()
     {
-        Console.WriteLine("Open Auftrag");
-        CurrentView = new AllOrdersViewModel();
+        var ordersVm = new AllOrdersViewModel();
+        ordersVm.Navigate = _navigateAction;
+        CurrentView = ordersVm;
     }
     private void OpenArchive()
     {

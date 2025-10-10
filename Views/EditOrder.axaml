@@ -14,13 +14,13 @@
         <Border Background="#F5F5F5">
             <StackPanel Margin="20">
                 <StackPanel Name="Kopfzeile">
-                    <TextBlock Text="Auftrag x" Name="Header"
+                    <TextBlock Text="{Binding Header}"
                                FontSize="24" 
                                FontWeight="Bold"
                                Foreground="Black"
                                Margin="0,0,0,20"/>
                     
-                    <TextBlock Text="" Name="Subheader"
+                    <TextBlock Text="{Binding Subheader}"
                                FontSize="12" 
                                Foreground="Black"
                                Margin="0,0,0,20"/>
@@ -38,13 +38,13 @@
                         <Grid ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto,Auto,Auto">
                             
                                 <TextBlock Text="Auftragsbezeichnung:" Foreground="Black" Grid.Column="0" Grid.Row = "0" VerticalAlignment="Center"/>
-                                <TextBox Name="InputAuftragsname" Margin="5" Width="300" HorizontalAlignment="Left" Grid.Column="1" Grid.Row = "0" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray" BorderBrush="Gray"/>
+                                <TextBox Text="{Binding InputAuftragsnamen, Mode=TwoWay}" Margin="5" Width="300" HorizontalAlignment="Left" Grid.Column="1" Grid.Row = "0" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray" BorderBrush="Gray"/>
                                 <TextBlock Text="Auftragsdatum:" Foreground="Black" Grid.Column="0" Grid.Row = "1" VerticalAlignment="Center"/>
-                                <TextBox Name="InputOrderDatum" Margin="5" Width="300" HorizontalAlignment="Left" Grid.Column="1" Grid.Row = "1" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray" BorderBrush="Gray"/>
+                                <TextBox Text="{Binding InputAuftragsdatum, Mode=TwoWay}" Margin="5" Width="300" HorizontalAlignment="Left" Grid.Column="1" Grid.Row = "1" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray" BorderBrush="Gray"/>
                                 <TextBlock Text="Maximale Kosten:" Foreground="Black" Grid.Column="0" Grid.Row = "2" VerticalAlignment="Center"/>
-                                <TextBox Name="InputMaxKosten" Margin="5" Width="300" HorizontalAlignment="Left" Grid.Column="1" Grid.Row = "2" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray" BorderBrush="Gray"/>
-                                <TextBlock Text="Reperaturen:" Foreground="Black" Grid.Column="0" Grid.Row = "3" VerticalAlignment="Center"/>
-                                <TextBox Name="InputReperaturen" Margin="5" Width="300" HorizontalAlignment="Left" Height="100" Grid.Column="1" Grid.Row = "3" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray" BorderBrush="Gray" TextWrapping="Wrap" AcceptsReturn="True"/>
+                                <TextBox Text="{Binding InputMaxKosten, Mode=TwoWay}" Margin="5" Width="300" HorizontalAlignment="Left" Grid.Column="1" Grid.Row = "2" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray" BorderBrush="Gray"/>
+                                <TextBlock Text="Reparaturen:" Foreground="Black" Grid.Column="0" Grid.Row = "3" VerticalAlignment="Center"/>
+                                <TextBox Text="{Binding InputReparaturen, Mode=TwoWay}" Margin="5" Width="300" HorizontalAlignment="Left" Height="100" Grid.Column="1" Grid.Row = "3" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray" BorderBrush="Gray" TextWrapping="Wrap" AcceptsReturn="True"/>
 
                         </Grid>
                     </StackPanel>

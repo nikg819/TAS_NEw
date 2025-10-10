@@ -68,12 +68,17 @@ public class AllOrdersViewModel : ReactiveObject
 
     private void ErledigtOrder(Order order)
     {
-        Console.WriteLine("ErledigtOrder");
+        var db = new Database.Database();
+        db.ChangeStatus(order);
+        CreateOrderlist();
     }
 
     private void EditOrder(Order order)
     {
         Console.WriteLine($"Edit {order.auftragsnamen}");
+        var editOrdervm = new EditOrderViewModel(order);
+        editOrdervm.Navigate = Navigate;
+        Navigate?.Invoke(editOrdervm);
     }
     
     private void DeleteOrder(Order order)
