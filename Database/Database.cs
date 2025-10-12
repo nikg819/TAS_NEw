@@ -17,7 +17,6 @@ namespace TAS_Test.Database
         {
             _dbPath = "/Users/niklas/RiderProjects/TAS_Test/Database/TAS.db";
         }
-
         
         /// Prüft, ob die DB erreichbar ist.
         public bool TestConnection()
@@ -172,7 +171,7 @@ namespace TAS_Test.Database
             connection.Open();
 
             using var command = connection.CreateCommand();
-            command.CommandText = "SELECT o.order_id, o.auftragsdatum, o.max_kosten, o.status, o.auftragsnamen, k.k_id, k.name, k.fahrzeug FROM 'order' AS o JOIN kundendaten AS k ON o.k_id = k.k_id WHERE o.status = 1;";
+            command.CommandText = "SELECT o.order_id, o.auftragsdatum, o.max_kosten, o.status, o.auftragsnamen, k.k_id, k.name, k.fahrzeug, o.reperaturen FROM 'order' AS o JOIN kundendaten AS k ON o.k_id = k.k_id WHERE o.status = 1;";
             
             using var reader = command.ExecuteReader();
             
@@ -188,10 +187,10 @@ namespace TAS_Test.Database
                     k_id = reader.GetInt32(5),
                     name = reader.IsDBNull(6) ? null : reader.GetString(6),
                     fahrzeug = reader.IsDBNull(7) ? null : reader.GetString(7),
+                    reparaturen = reader.IsDBNull(8) ? null : reader.GetString(8),
                     
                 });
             }
-
             return orderliste;
         }
         
@@ -203,7 +202,7 @@ namespace TAS_Test.Database
 
             using var command = connection.CreateCommand();
             command.CommandText = @"
-                        SELECT o.order_id, k.name, o.auftragsnamen, k.fahrzeug, o.auftragsdatum, o.max_kosten
+                        SELECT o.order_id, k.name, o.auftragsnamen, k.fahrzeug, o.auftragsdatum, o.max_kosten, o.reperaturen
                         FROM 'order' AS o
                         JOIN 'kundendaten' AS k ON o.k_id = k.k_id
                         WHERE (CAST(o.order_id AS TEXT) LIKE @pattern
@@ -211,17 +210,15 @@ namespace TAS_Test.Database
                            OR o.auftragsnamen LIKE @pattern
                            OR k.fahrzeug LIKE @pattern
                            OR o.auftragsdatum LIKE @pattern
-                           OR o.max_kosten LIKE @pattern)
+                           OR o.max_kosten LIKE @pattern
+                           OR o.reperaturen LIKE @pattern)
                             AND o.status = 1;";
-                           
-                           
 
             command.Parameters.AddWithValue("@pattern", $"%{search}%");
             
             using var reader = command.ExecuteReader();
             
             var orderListe = new List<Order>();
-            
             
             while (reader.Read())
             {
@@ -232,7 +229,8 @@ namespace TAS_Test.Database
                     auftragsnamen = reader.IsDBNull(2) ? null : reader.GetString(2),
                     fahrzeug = reader.IsDBNull(3) ? null : reader.GetString(3),
                     auftragsdatum = reader.IsDBNull(4) ? null : reader.GetString(4),
-                    maxKosten = reader.IsDBNull(5) ? null : reader.GetString(5)
+                    maxKosten = reader.IsDBNull(5) ? null : reader.GetString(5),
+                    reparaturen = reader.IsDBNull(6) ? null : reader.GetString(6),
                 });
             }
             return orderListe;
@@ -295,6 +293,21 @@ namespace TAS_Test.Database
             command.ExecuteNonQuery();
         }
         
+        //Löscht Auftrag
+        public async Task<bool> DeleteOrder(int orderId)
+        {
+            using var connection = new SqliteConnection($"Data Source={_dbPath}");
+            connection.Open();
+
+            using var command = connection.CreateCommand();
+            command.CommandText = "DELETE FROM 'order' WHERE order_id=@id";
+
+            command.Parameters.AddWithValue("@id", orderId);
+
+            command.ExecuteNonQuery();
+            return true;
+        }
+        
         //-----------------------------------------Archivaufträge----------------------------------
         
         //Liste mit allen erledigten Aufträgen
@@ -306,7 +319,7 @@ namespace TAS_Test.Database
             connection.Open();
 
             using var command = connection.CreateCommand();
-            command.CommandText = "SELECT o.order_id, o.auftragsdatum, o.max_kosten, o.status, o.auftragsnamen, k.k_id, k.name, k.fahrzeug FROM 'order' AS o JOIN kundendaten AS k ON o.k_id = k.k_id WHERE o.status = 0;";
+            command.CommandText = "SELECT o.order_id, o.auftragsdatum, o.max_kosten, o.status, o.auftragsnamen, k.k_id, k.name, k.fahrzeug, o.reperaturen FROM 'order' AS o JOIN kundendaten AS k ON o.k_id = k.k_id WHERE o.status = 0;";
             
             using var reader = command.ExecuteReader();
             
@@ -322,10 +335,10 @@ namespace TAS_Test.Database
                     k_id = reader.GetInt32(5),
                     name = reader.IsDBNull(6) ? null : reader.GetString(6),
                     fahrzeug = reader.IsDBNull(7) ? null : reader.GetString(7),
+                    reparaturen = reader.IsDBNull(8) ? null : reader.GetString(8)
                     
                 });
             }
-
             return archiveorderliste;
         }
         
@@ -345,17 +358,15 @@ namespace TAS_Test.Database
                            OR o.auftragsnamen LIKE @pattern
                            OR k.fahrzeug LIKE @pattern
                            OR o.auftragsdatum LIKE @pattern
-                           OR o.max_kosten LIKE @pattern)
+                           OR o.max_kosten LIKE @pattern
+                           OR o.reperaturen LIKE @pattern)
                             AND o.status = '0';";
-                           
-                           
-
+            
             command.Parameters.AddWithValue("@pattern", $"%{search}%");
             
             using var reader = command.ExecuteReader();
             
             var archiveorderListe = new List<Order>();
-            
             
             while (reader.Read())
             {
@@ -370,7 +381,6 @@ namespace TAS_Test.Database
                 });
             }
             return archiveorderListe;
-            
         }
         
         //Reaktiviere Auftrag

@@ -14,13 +14,13 @@ public class InfoViewModel : ReactiveObject
     public ReactiveCommand<Unit, Unit> NeinCommand { get; }
     
     private readonly Window _window;
-    private readonly KundenlisteViewModel _kundenlistevm;
+    private readonly ReactiveObject _viewModel;
 
-    public InfoViewModel(Window window, string message,int customerID, KundenlisteViewModel kundenlistevm)
+    public InfoViewModel(Window window, string message,int customerID, ReactiveObject viewModel)
     {
         _window = window;
         Message = message;
-        _kundenlistevm = kundenlistevm;
+        _viewModel = viewModel;
 
         NeinCommand = ReactiveCommand.Create(() =>
         {
@@ -28,19 +28,39 @@ public class InfoViewModel : ReactiveObject
         });
         JaCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            var db = new Database.Database();
-            bool deleted = await db.DeleteCustomer(customerID);
-            if (deleted)
+            if (_viewModel is KundenlisteViewModel kundenliste)
             {
-                Console.WriteLine("Kunde wird gelöscht");
-                _kundenlistevm.CreateCustomerlist();
-                _window.Close();
+                var db = new Database.Database();
+                bool deleted = await db.DeleteCustomer(customerID);
+                if (deleted)
+                {
+                    Console.WriteLine("Kunde wird gelöscht");
+                    kundenliste.CreateCustomerlist();
+                    _window.Close();
+                }
+                else
+                {
+                    kundenliste.Subheader = "Der Kunde kann nicht gelöscht werden, da er noch offene Aufträge hat.";
+                    _window.Close();
+                }
             }
-            else
+            if (_viewModel is AllOrdersViewModel orderliste)
             {
-                _kundenlistevm.Subheader = "Der Kunde kann nicht gelöscht werden, da er noch offene Aufträge hat.";
-                _window.Close();
+                var db = new Database.Database();
+                bool deleted = await db.DeleteOrder(customerID);
+                if (deleted)
+                {
+                    Console.WriteLine("Auftrag wird gelöscht");
+                    orderliste.CreateOrderlist();
+                    _window.Close();
+                }
+                else
+                {
+                    orderliste.Subheader = "Der Auftrag kann nicht gelöscht werden";
+                    _window.Close();
+                }
             }
+            
             
         });
     }

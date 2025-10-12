@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Reactive;
 using ReactiveUI;
 using TAS_Test.Models;
+using TAS_Test.Views;
 
 namespace TAS_Test.ViewModels;
 
@@ -75,7 +76,7 @@ public class AllOrdersViewModel : ReactiveObject
 
     private void EditOrder(Order order)
     {
-        Console.WriteLine($"Edit {order.auftragsnamen}");
+        Console.WriteLine($"Edit {order.auftragsnamen}, rep: {order.reparaturen}");
         var editOrdervm = new EditOrderViewModel(order);
         editOrdervm.Navigate = Navigate;
         Navigate?.Invoke(editOrdervm);
@@ -83,7 +84,10 @@ public class AllOrdersViewModel : ReactiveObject
     
     private void DeleteOrder(Order order)
     {
-        Console.WriteLine($"Delete {order.auftragsnamen}");
+        string message = $"Willst du {order.auftragsnamen} löschen?";
+        var infowindow = new InfoWindow();
+        infowindow.DataContext = new InfoViewModel(infowindow, message, order.order_id,this);
+        infowindow.Show();
     }
 
     private void ShowOrder(Order order)

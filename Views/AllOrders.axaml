@@ -70,7 +70,7 @@
                                         <TextBlock Text="{Binding auftragsdatum}" Grid.Column="4" Foreground="Gray" TextWrapping="Wrap"/>
                                         <TextBlock Text="{Binding maxKosten}" Grid.Column="5" Foreground="Gray" TextWrapping="Wrap"/>
                                         
-                                        <Button Content="✓" 
+                                        <Button Content="✔" 
                                                 Grid.Column="6"
                                                 Background="Transparent"
                                                 Foreground="Black"
@@ -85,7 +85,7 @@
                                                 CommandParameter="{Binding}" 
                                                 ToolTip.Tip="Auftrag erledigt"/>
                                         
-                                        <Button Content="Edit" 
+                                        <Button Content="✏️" 
                                             Grid.Column="7"
                                             Background="Transparent"
                                             Foreground="Black"
@@ -100,7 +100,7 @@
                                             CommandParameter="{Binding}" 
                                             ToolTip.Tip="Auftrag bearbeiten"/>
                                         
-                                        <Button Content="Del" 
+                                        <Button Content="️🗑" 
                                                 Grid.Column="8"
                                                 Background="Transparent"
                                                 Foreground="Black"
@@ -130,7 +130,7 @@
                                                 CommandParameter="{Binding}"
                                                 ToolTip.Tip="Auftrag anzeigen"/>
                                         
-                                        <Button Content="Print" 
+                                        <Button Content="🖨️" 
                                                 Grid.Column="10"
                                                 Background="Transparent"
                                                 Foreground="Black"

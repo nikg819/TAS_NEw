@@ -67,11 +67,12 @@
                                         <TextBlock Text="{Binding phone}" Grid.Column="4" Foreground="Gray" TextWrapping="Wrap"/>
                                         <TextBlock Text="{Binding notes}" Grid.Column="5" Foreground="Gray" TextWrapping="Wrap"/>
                                         
-                                        <Button Content="Edit" 
+                                        <Button Content="✏️" 
                                             Grid.Column="6"
-                                            Background="LightBlue"
-                                            Foreground="DarkBlue"
-                                            BorderThickness="0"
+                                            Background="Transparent"
+                                            Foreground="Black"
+                                            BorderBrush="LightGray"
+                                            BorderThickness="1"
                                             Padding="10,5"
                                             Margin="5,0"
                                             CornerRadius="3"
@@ -81,11 +82,12 @@
                                             CommandParameter="{Binding}" 
                                             ToolTip.Tip="Kunde bearbeiten"/>
                                         
-                                        <Button Content="Del" 
+                                        <Button Content="🗑" 
                                                 Grid.Column="7"
-                                                Background="LightCoral"
-                                                Foreground="DarkRed"
-                                                BorderThickness="0"
+                                                Background="Transparent"
+                                                Foreground="Black"
+                                                BorderBrush="LightGray"
+                                                BorderThickness="1"
                                                 Padding="10,5"
                                                 Margin="5,0"
                                                 CornerRadius="3"
@@ -95,11 +97,12 @@
                                                 CommandParameter="{Binding}"
                                                 ToolTip.Tip="Kunde löschen"/>
                                         
-                                        <Button Content="Order" 
+                                        <Button Content="+" 
                                                 Grid.Column="8"
-                                                Background="LightGreen"
-                                                Foreground="DarkGreen"
-                                                BorderThickness="0"
+                                                Background="Transparent"
+                                                Foreground="Black"
+                                                BorderBrush="LightGray"
+                                                BorderThickness="1"
                                                 Padding="10,5"
                                                 Margin="5,0"
                                                 CornerRadius="3"

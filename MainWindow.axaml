@@ -78,7 +78,7 @@
                         Padding="10,8"
                         Margin="0,2"/>
                 
-                <Button Content="Auftragsarchiv" 
+                <Button Content="Erledigte Aufträge" 
                         Command="{Binding Archiv}"
                         Background="Transparent"
                         Foreground="White"
