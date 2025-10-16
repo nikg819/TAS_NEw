@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using TAS_Test.Config;
 using TAS_Test.Models;
 using TAS_Test.ViewModels;
 using TAS_Test.Views;
@@ -15,7 +16,8 @@ namespace TAS_Test.Database
 
         public Database()
         {
-            _dbPath = "/Users/niklas/RiderProjects/TAS_Test/Database/TAS.db";
+            var config = ConfigService.LoadConfig();
+            _dbPath = config.Database.dbPath;
         }
         
         /// Prüft, ob die DB erreichbar ist.
@@ -171,7 +173,7 @@ namespace TAS_Test.Database
             connection.Open();
 
             using var command = connection.CreateCommand();
-            command.CommandText = "SELECT o.order_id, o.auftragsdatum, o.max_kosten, o.status, o.auftragsnamen, k.k_id, k.name, k.fahrzeug, o.reperaturen FROM 'order' AS o JOIN kundendaten AS k ON o.k_id = k.k_id WHERE o.status = 1;";
+            command.CommandText = "SELECT o.order_id, o.auftragsdatum, o.max_kosten, o.status, o.auftragsnamen, k.k_id, k.name, k.fahrzeug,k.mail,k.phone, o.reperaturen FROM 'order' AS o JOIN kundendaten AS k ON o.k_id = k.k_id WHERE o.status = 1;";
             
             using var reader = command.ExecuteReader();
             
@@ -187,7 +189,9 @@ namespace TAS_Test.Database
                     k_id = reader.GetInt32(5),
                     name = reader.IsDBNull(6) ? null : reader.GetString(6),
                     fahrzeug = reader.IsDBNull(7) ? null : reader.GetString(7),
-                    reparaturen = reader.IsDBNull(8) ? null : reader.GetString(8),
+                    mail = reader.IsDBNull(8) ? null : reader.GetString(8),
+                    phone = reader.IsDBNull(9) ? null : reader.GetString(9),
+                    reparaturen = reader.IsDBNull(10) ? null : reader.GetString(10),
                     
                 });
             }

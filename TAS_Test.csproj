@@ -19,6 +19,7 @@
             <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
             <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
         </PackageReference>
+        <PackageReference Include="DinkToPdf" Version="1.0.8" />
         <PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.0-rc.1.25451.107" />
         <PackageReference Include="ReactiveUI" Version="21.0.1" />
         <PackageReference Include="System.Reactive" Version="6.0.2" />

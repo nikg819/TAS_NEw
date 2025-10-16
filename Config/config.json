@@ -1,0 +1,9 @@
+{
+  "Pdf": {
+    "PrincePath": "prince",
+    "outputPath": "/Users/niklas/Desktop/Pdf/"
+  },
+  "Database": {
+    "dbPath": "/Users/niklas/RiderProjects/TAS_Test/Database/TAS.db"
+  }
+}

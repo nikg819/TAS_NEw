@@ -1,8 +1,10 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Reactive;
+using System.Threading;
 using ReactiveUI;
 using TAS_Test.Models;
+using TAS_Test.services;
 using TAS_Test.Views;
 
 namespace TAS_Test.ViewModels;
@@ -92,12 +94,27 @@ public class AllOrdersViewModel : ReactiveObject
 
     private void ShowOrder(Order order)
     {
-        Console.WriteLine($"Show {order.auftragsnamen}");
+        var showordervm = new ShowOrderViewModel(order);
+        showordervm.Navigate = Navigate;
+        Navigate?.Invoke(showordervm);
     }
 
     private void PrintOrder(Order order)
     {
-        Console.WriteLine($"Print {order.auftragsnamen}");
+        var pdf = new PdfService();
+        string fileName = order.auftragsnamen.Replace(" ", "_");
+        Console.WriteLine(fileName);
+        try
+        {
+            pdf.HtmlToPdf(orderTemplate.html(order),
+                $"{fileName}_{order.order_id}.pdf");
+            Subheader = $"✅ PDF '{fileName}_{order.order_id}.pdf' erfolgreich erstellt";
+        }
+        catch (Exception e)
+        {
+            Subheader = $"Es ist ein Fehler aufgetreten: {e.Message}";
+        }
+        
     }
 
     public void CreateOrderlist()
