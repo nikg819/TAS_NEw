@@ -27,6 +27,7 @@ public class AllOrdersViewModel : ReactiveObject
     }
     
     private string _searchText;
+    
 
     public string SearchText
     {
@@ -34,6 +35,30 @@ public class AllOrdersViewModel : ReactiveObject
         set => this.RaiseAndSetIfChanged(ref _searchText, value);
     }
     public ReactiveCommand<string, Unit> SearchCommand { get; }
+    
+    private bool _isAscending = true;
+    public bool IsAscending
+    {
+        get => _isAscending;
+        set
+        {
+            if (_isAscending == value) return; 
+            this.RaiseAndSetIfChanged(ref _isAscending, value);
+            CreateOrderlist();
+            this.RaisePropertyChanged(nameof(IsDescending)); 
+        }
+    }
+
+    public bool IsDescending
+    {
+        get => !_isAscending;
+        set
+        {
+            IsAscending = !value; // nur IsAscending setzen
+        }
+    }
+    
+    public string SortOrder => IsAscending ? "ASC" : "DESC";
     public ReactiveCommand<Order, Unit> ErledigtCommand { get; }
     public ReactiveCommand<Order, Unit> EditCommand { get; }
     public ReactiveCommand<Order, Unit> DeleteCommand { get; }
@@ -78,7 +103,6 @@ public class AllOrdersViewModel : ReactiveObject
 
     private void EditOrder(Order order)
     {
-        Console.WriteLine($"Edit {order.auftragsnamen}, rep: {order.reparaturen}");
         var editOrdervm = new EditOrderViewModel(order);
         editOrdervm.Navigate = Navigate;
         Navigate?.Invoke(editOrdervm);
@@ -116,12 +140,11 @@ public class AllOrdersViewModel : ReactiveObject
         }
         
     }
-
+    
     public void CreateOrderlist()
     {
-        Console.WriteLine("Create Orderlist");
         var db = new Database.Database();
-        var allOrders = db.GetAllOrders();
+        var allOrders = db.GetAllOrders(SortOrder);
         Subheader = $"Anzahl Aufträge: {allOrders.Count}";
         AllOrders = new ObservableCollection<Order>(allOrders);
     }

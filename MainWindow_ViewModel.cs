@@ -29,17 +29,24 @@ public class MainWindow_ViewModel : ReactiveObject
         Archiv = ReactiveCommand.Create(OpenArchive);
         Einstellungen = ReactiveCommand.Create(OpenSettings);
         TASStart();
-        OpenCustomerlist();
     }
 
     private void TASStart()
     {
         var db = new Database.Database();
-        if (!db.TestConnection())
+        try
         {
-            Console.WriteLine("TestConnection failed");
-            Environment.Exit(1);
+            db.TestConnection();
+            OpenCustomerlist();
         }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            var svm = new SettingsViewModel();
+            svm.Subheader = $"🚨Datenbankpfad nicht korrekt: {ex.Message}🚨";
+            CurrentView = svm;
+        }
+        
     }
     public void OpenCustomerlist()
     {
@@ -61,7 +68,7 @@ public class MainWindow_ViewModel : ReactiveObject
     }
     private void OpenSettings()
     {
-        Console.WriteLine("Open Einstellungen, mehr gibt es hier nicht");
+        CurrentView = new SettingsViewModel();
     }
     
     

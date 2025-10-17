@@ -31,7 +31,7 @@ public class ShowOrderViewModel : ReactiveObject
 
     private void NavigateToAllOrders()
     {
-        var allordersvm = new AllOrdersViewModel(); //hier wird customer übergeben 
+        var allordersvm = new AllOrdersViewModel();
         allordersvm.Navigate = Navigate;
         Navigate?.Invoke(allordersvm);
     }
@@ -45,10 +45,10 @@ public class ShowOrderViewModel : ReactiveObject
         ShowOrderFahrzeug = $"{order.fahrzeug}";
         ShowOrderMail = $"{order.mail}";
         ShowOrderPhone = $"{order.phone}";
-        ShowOrderKundenbemerkungen = $"Hier sollen notes stehen";
+        ShowOrderKundenbemerkungen = $"{order.kundenbemerkungen}";
         ShowOrderMaximaleKosten = $"{order.maxKosten}";
         ShowOrderReparaturen = $"{order.reparaturen}";
-        ShowOrderTimestamp = $"Timestamp";
+        ShowOrderTimestamp = $"{order.timestamp}";
         ShowOrderAuftragsdatum = $"{order.auftragsdatum}";
     }
 }

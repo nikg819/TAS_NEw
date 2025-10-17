@@ -15,9 +15,10 @@
             <Grid Margin="20">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <StackPanel Name="Kopfzeile">
+                <StackPanel Name="Kopfzeile" Grid.Row="0">
                     <TextBlock Text="Aufträge" Name="Header"
                                FontSize="24" 
                                FontWeight="Bold"
@@ -28,13 +29,14 @@
                                FontSize="12" 
                                Foreground="Black"
                                Margin="0,0,0,20"/>
-                    <TextBlock Text="" Name="InvisibleData"
-                               FontSize="1" 
-                               Foreground="Transparent"
-                               Margin="0"/>
+                     </StackPanel>
+                
+                <Grid Grid.Row="1" ColumnDefinitions="Auto,*,Auto,Auto, Auto">
                     <TextBox Name="Suche"
                              Text="{Binding SearchText, Mode=TwoWay}"
-                             Margin="5" Width="200" 
+                             Grid.Column="0"
+                             Margin="5"
+                             Width="200" 
                              HorizontalAlignment="Left"  
                              VerticalAlignment="Center" 
                              Background="white" 
@@ -45,9 +47,79 @@
                             <KeyBinding Gesture="Enter" Command="{Binding SearchCommand}" CommandParameter="{Binding Text, ElementName=Suche}" />
                         </TextBox.KeyBindings>
                     </TextBox>
-                     </StackPanel>
-                
-                <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1">
+                    
+                    <StackPanel Grid.Column="1" />
+                    
+                    <TextBlock Text="Sortieren nach Erstellungsdatum:" 
+                               Grid.Column="2"
+                               Foreground="Black"
+                               FontSize="10"
+                               VerticalAlignment="Center"
+                               Margin="0,0,10,0"/>
+                    
+                    <CheckBox Content="Aufsteigend"
+                              Grid.Column="3"
+                              Margin="0,0,10,0"
+                              Foreground="Black"
+                              FontSize="10"
+                              IsChecked="{Binding IsAscending, Mode=TwoWay}">
+                        <CheckBox.Styles>
+                            <Style Selector="CheckBox">
+                                <Setter Property="Template">
+                                    <ControlTemplate>
+                                        <StackPanel Orientation="Horizontal" Spacing="5">
+                                            <!-- Box -->
+                                            <Border Width="15" Height="15" CornerRadius="3"
+                                                    BorderBrush="DarkGray" BorderThickness="1"
+                                                    Background="Transparent">
+                                                <!-- Häkchen -->
+                                                <Border Width="12" Height="12"
+                                                           Background="Gray"
+                                                           CornerRadius="3"
+                                                           HorizontalAlignment="Center"
+                                                           VerticalAlignment="Center"
+                                                           IsVisible="{TemplateBinding IsChecked}"/>
+                                            </Border>
+                                            <ContentPresenter Content="{TemplateBinding Content}" 
+                                                              VerticalAlignment="Center" />
+                                        </StackPanel>
+                                    </ControlTemplate>
+                                </Setter>
+                            </Style>
+                        </CheckBox.Styles>
+                    </CheckBox>
+                    <CheckBox Content="Absteigend"
+                              Grid.Column="4"
+                                 Foreground="Black"
+                                 FontSize="10"
+                                 Margin="0,0,10,0"
+                                 IsChecked="{Binding IsDescending, Mode=TwoWay}">
+                        <CheckBox.Styles>
+                            <Style Selector="CheckBox">
+                                <Setter Property="Template">
+                                    <ControlTemplate>
+                                        <StackPanel Orientation="Horizontal" Spacing="5">
+                                            <!-- Box -->
+                                            <Border Width="15" Height="15" CornerRadius="3"
+                                                    BorderBrush="DarkGray" BorderThickness="1"
+                                                    Background="Transparent">
+                                                <!-- Häkchen -->
+                                                <Border Width="12" Height="12"
+                                                        Background="Gray"
+                                                        CornerRadius="3"
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        IsVisible="{TemplateBinding IsChecked}"/>
+                                            </Border>
+                                            <ContentPresenter Content="{TemplateBinding Content}" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </ControlTemplate>
+                                </Setter>
+                            </Style>
+                        </CheckBox.Styles>
+                    </CheckBox>
+                </Grid>
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="2" >
                     <ItemsControl ItemsSource="{Binding AllOrders}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>

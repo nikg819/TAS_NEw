@@ -1,3 +1,6 @@
+using System;
+using System.ComponentModel.DataAnnotations;
+
 namespace TAS_Test.Models;
 
 
@@ -14,10 +17,12 @@ public class Order
     public string mail { get; set; }
     public string phone { get; set; }
     public string reparaturen { get; set; }
+    public string kundenbemerkungen { get; set; }
+    public string timestamp {get; set;}
 
     public Order() { }
     
-    public Order(int order_id, string auftragsdatum, string maxKosten, string status, string auftragsnamen, int k_id, string reparaturen)
+    public Order(int order_id, string auftragsdatum, string maxKosten, string status, string auftragsnamen, int k_id, string reparaturen, string timestamp)
     {
         this.order_id = order_id;
         this.auftragsdatum = auftragsdatum;
@@ -26,6 +31,7 @@ public class Order
         this.auftragsnamen = auftragsnamen;
         this.k_id = k_id;
         this.reparaturen = reparaturen;
+        this.timestamp = timestamp;
     }
 }
 

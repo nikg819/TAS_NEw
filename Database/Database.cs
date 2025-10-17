@@ -21,26 +21,11 @@ namespace TAS_Test.Database
         }
         
         /// Prüft, ob die DB erreichbar ist.
-        public bool TestConnection()
+        public void TestConnection()
         {
-            try
-            {
-                if (!File.Exists(_dbPath))
-                {
-                    Console.WriteLine("Database not found");
-                    return false;
-                }
-
                 using var connection = new SqliteConnection($"Data Source={_dbPath};Mode=ReadWrite");
                 connection.Open();
                 Console.WriteLine("DB-Verbindung erfolgreich.");
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Fehler bei der DB-Verbindung: {ex.Message}");
-                return false;
-            }
         }
         
         // Gibt Liste aller Kunden an
@@ -165,15 +150,15 @@ namespace TAS_Test.Database
         //----------------------------------------aufträge------------------------------------
         
         //Gibt Liste aller Aufträge an
-        public List<Order> GetAllOrders()
+        public List<Order> GetAllOrders(string sort)
         {
             var orderliste = new List<Order>();
-
+            
             using var connection = new SqliteConnection($"Data Source={_dbPath}");
             connection.Open();
 
             using var command = connection.CreateCommand();
-            command.CommandText = "SELECT o.order_id, o.auftragsdatum, o.max_kosten, o.status, o.auftragsnamen, k.k_id, k.name, k.fahrzeug,k.mail,k.phone, o.reperaturen FROM 'order' AS o JOIN kundendaten AS k ON o.k_id = k.k_id WHERE o.status = 1;";
+            command.CommandText = $"SELECT o.order_id, o.auftragsdatum, o.max_kosten, o.status, o.auftragsnamen, k.k_id, k.name, k.fahrzeug,k.mail,k.phone, o.reperaturen, k.notes, o.timestamp FROM 'order' AS o JOIN kundendaten AS k ON o.k_id = k.k_id WHERE o.status = 1 ORDER BY o.order_id {sort};";
             
             using var reader = command.ExecuteReader();
             
@@ -192,6 +177,9 @@ namespace TAS_Test.Database
                     mail = reader.IsDBNull(8) ? null : reader.GetString(8),
                     phone = reader.IsDBNull(9) ? null : reader.GetString(9),
                     reparaturen = reader.IsDBNull(10) ? null : reader.GetString(10),
+                    kundenbemerkungen = reader.IsDBNull(11) ? null : reader.GetString(11),
+                    timestamp = reader.IsDBNull(12) ? null : reader.GetString(12),
+                    
                     
                 });
             }
@@ -254,7 +242,7 @@ namespace TAS_Test.Database
             }
             
             using var command = connection.CreateCommand();
-            command.CommandText = @"INSERT INTO 'order' (auftragsdatum, max_kosten, status,k_id,reperaturen,auftragsnamen) VALUES ($auftragsdatum, $max_kosten, $status,$k_id,$reparaturen,$auftragsnamen)";
+            command.CommandText = @"INSERT INTO 'order' (auftragsdatum, max_kosten, status,k_id,reperaturen,auftragsnamen,timestamp) VALUES ($auftragsdatum, $max_kosten, $status,$k_id,$reparaturen,$auftragsnamen,$timestamp)";
             
             command.Parameters.AddWithValue("$auftragsdatum", string.IsNullOrWhiteSpace(newOrder.auftragsdatum) ? DBNull.Value : newOrder.auftragsdatum);
             command.Parameters.AddWithValue("$max_kosten", string.IsNullOrWhiteSpace(newOrder.maxKosten) ? DBNull.Value : newOrder.maxKosten);
@@ -262,6 +250,7 @@ namespace TAS_Test.Database
             command.Parameters.AddWithValue("$k_id", newOrder.k_id);
             command.Parameters.AddWithValue("$auftragsnamen", string.IsNullOrWhiteSpace(newOrder.auftragsnamen) ? DBNull.Value : newOrder.auftragsnamen);
             command.Parameters.AddWithValue("$reparaturen", string.IsNullOrWhiteSpace(newOrder.reparaturen) ? DBNull.Value : newOrder.reparaturen);
+            command.Parameters.AddWithValue("$timestamp", string.IsNullOrWhiteSpace(newOrder.timestamp) ? DBNull.Value : newOrder.timestamp);
             
             command.ExecuteNonQuery();
         }
@@ -323,7 +312,7 @@ namespace TAS_Test.Database
             connection.Open();
 
             using var command = connection.CreateCommand();
-            command.CommandText = "SELECT o.order_id, o.auftragsdatum, o.max_kosten, o.status, o.auftragsnamen, k.k_id, k.name, k.fahrzeug, o.reperaturen FROM 'order' AS o JOIN kundendaten AS k ON o.k_id = k.k_id WHERE o.status = 0;";
+            command.CommandText = "SELECT o.order_id, o.auftragsdatum, o.max_kosten, o.status, o.auftragsnamen, k.k_id, k.name, k.fahrzeug, o.reperaturen, o.timestamp FROM 'order' AS o JOIN kundendaten AS k ON o.k_id = k.k_id WHERE o.status = 0;";
             
             using var reader = command.ExecuteReader();
             
@@ -339,7 +328,8 @@ namespace TAS_Test.Database
                     k_id = reader.GetInt32(5),
                     name = reader.IsDBNull(6) ? null : reader.GetString(6),
                     fahrzeug = reader.IsDBNull(7) ? null : reader.GetString(7),
-                    reparaturen = reader.IsDBNull(8) ? null : reader.GetString(8)
+                    reparaturen = reader.IsDBNull(8) ? null : reader.GetString(8),
+                    timestamp = reader.IsDBNull(9) ? null : reader.GetString(9),
                     
                 });
             }

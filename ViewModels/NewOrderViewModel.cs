@@ -39,6 +39,9 @@ public class NewOrderViewModel : ReactiveObject
 
     public void ButtonSafeNewOrder(Customer customer)
     {
+        DateTime time = DateTime.Now;
+        string timestamp = time.ToString("dd.MM.yyyy 'um' HH:mm:ss");
+        
         Order newOrder = new Order(
             1,
             InputAuftragsdatum ?? "",
@@ -46,7 +49,9 @@ public class NewOrderViewModel : ReactiveObject
             "1",
             InputAuftragsnamen,
             customer.k_id,
-            InputReparaturen ?? "");
+            InputReparaturen ?? "",
+            timestamp
+            );
         var db = new Database.Database();
         db.AddOrder(newOrder);
 

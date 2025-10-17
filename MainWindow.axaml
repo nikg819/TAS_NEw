@@ -40,6 +40,9 @@
         <DataTemplate DataType="viewModels:NewOrderViewModel">
             <views2:NewOrder />
         </DataTemplate>
+        <DataTemplate DataType="viewModels:SettingsViewModel">
+            <views2:Settings />
+        </DataTemplate>
     </Window.DataTemplates>
     
     <Grid>
