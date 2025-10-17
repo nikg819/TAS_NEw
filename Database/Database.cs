@@ -390,5 +390,34 @@ namespace TAS_Test.Database
             command.Parameters.AddWithValue("@id",order.order_id);
             command.ExecuteNonQuery();
         }
-    }
+        
+        //-----------------------------------Artikelverwaltung---------------------------------------------
+        
+        //Liste mit allen artikeln
+        public List<Article> GetAllArticles()
+        {
+            var articleliste = new List<Article>();
+            
+            using var connection = new SqliteConnection($"Data Source={_dbPath}");
+            connection.Open();
+
+            using var command = connection.CreateCommand();
+            command.CommandText = $"SELECT * FROM 'articles'";
+            
+            using var reader = command.ExecuteReader();
+            
+            while (reader.Read())
+            {
+                articleliste.Add(new Article()
+                {
+                    ArticleDatabaseId = reader.GetInt32(0),
+                    ArticleNumber = reader.IsDBNull(1) ? null : reader.GetInt32(1),
+                    ArticleName = reader.IsDBNull(1) ? null : reader.GetString(2),
+                    ArticleDescription = reader.IsDBNull(2) ? null : reader.GetString(3),
+                    ArticlePrice = reader.IsDBNull(4) ? null : reader.GetString(4),
+                });
+            }
+            return articleliste;
+            }
+        }
 }

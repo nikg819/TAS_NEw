@@ -1,10 +1,4 @@
-using System;
-using System.Collections.Generic;
-using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Media;
 using ReactiveUI;
-using TAS_Test.ViewModels;
 
 namespace TAS_Test.Models;
 

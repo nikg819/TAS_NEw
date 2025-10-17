@@ -1,8 +1,4 @@
-using System;
-using System.ComponentModel.DataAnnotations;
-
 namespace TAS_Test.Models;
-
 
 public class Order
 {

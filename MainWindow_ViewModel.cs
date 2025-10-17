@@ -18,6 +18,7 @@ public class MainWindow_ViewModel : ReactiveObject
     public ReactiveCommand<Unit, Unit> Kundenliste { get; }
     public ReactiveCommand<Unit, Unit> Aufträge { get; }
     public ReactiveCommand<Unit, Unit> Archiv { get; }
+    public ReactiveCommand<Unit, Unit> Artikelliste { get; }
     public ReactiveCommand<Unit, Unit> Einstellungen { get; }
     
     public MainWindow_ViewModel()
@@ -27,6 +28,7 @@ public class MainWindow_ViewModel : ReactiveObject
         Kundenliste = ReactiveCommand.Create(OpenCustomerlist);
         Aufträge = ReactiveCommand.Create(OpenOrders);
         Archiv = ReactiveCommand.Create(OpenArchive);
+        Artikelliste = ReactiveCommand.Create(OpenArticles);
         Einstellungen = ReactiveCommand.Create(OpenSettings);
         TASStart();
     }
@@ -65,6 +67,13 @@ public class MainWindow_ViewModel : ReactiveObject
     {
         Console.WriteLine("Open Archiv");
         CurrentView = new OrderArchiveViewModel();
+    }
+
+    private void OpenArticles()
+    {
+        var articlesVm = new AllArticlesViewModel();
+        articlesVm.Navigate = _navigateAction;
+        CurrentView = new AllArticlesViewModel();
     }
     private void OpenSettings()
     {

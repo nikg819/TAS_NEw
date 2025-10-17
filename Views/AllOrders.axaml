@@ -134,16 +134,17 @@
                                         Margin="5"
                                         Padding="10"
                                         Background="White">
-                                    <Grid ColumnDefinitions="50,*,*,*,*,70,Auto,Auto,Auto,Auto,Auto">
-                                        <TextBlock Text="{Binding order_id}" Grid.Column="0" Foreground="Gray" TextWrapping="Wrap" />
-                                        <TextBlock Text="{Binding name}" Grid.Column="1" Foreground="Gray" TextWrapping="Wrap"/>
-                                        <TextBlock Text="{Binding auftragsnamen}" Grid.Column="2" Foreground="Gray" TextWrapping="Wrap" />
-                                        <TextBlock Text="{Binding fahrzeug}" Grid.Column="3" Foreground="Gray" TextWrapping="Wrap"/>
-                                        <TextBlock Text="{Binding auftragsdatum}" Grid.Column="4" Foreground="Gray" TextWrapping="Wrap"/>
-                                        <TextBlock Text="{Binding maxKosten}" Grid.Column="5" Foreground="Gray" TextWrapping="Wrap"/>
+                                    <Grid ColumnDefinitions="40,50,*,*,*,*,70,Auto,Auto,Auto,Auto,Auto">
+                                        <Ellipse Grid.Column="0" Fill="LightGreen" Height="12" Width="12" VerticalAlignment="Top" Margin="0,2,0,0"  />
+                                        <TextBlock Text="{Binding order_id}" Grid.Column="1" Foreground="Gray" TextWrapping="Wrap" />
+                                        <TextBlock Text="{Binding name}" Grid.Column="2" Foreground="Gray" TextWrapping="Wrap"/>
+                                        <TextBlock Text="{Binding auftragsnamen}" Grid.Column="3" Foreground="Gray" TextWrapping="Wrap" />
+                                        <TextBlock Text="{Binding fahrzeug}" Grid.Column="4" Foreground="Gray" TextWrapping="Wrap"/>
+                                        <TextBlock Text="{Binding auftragsdatum}" Grid.Column="5" Foreground="Gray" TextWrapping="Wrap"/>
+                                        <TextBlock Text="{Binding maxKosten}" Grid.Column="6" Foreground="Gray" TextWrapping="Wrap"/>
                                         
                                         <Button Content="✔" 
-                                                Grid.Column="6"
+                                                Grid.Column="7"
                                                 Background="Transparent"
                                                 Foreground="Black"
                                                 BorderBrush="LightGray"
@@ -158,7 +159,7 @@
                                                 ToolTip.Tip="Auftrag erledigt"/>
                                         
                                         <Button Content="✏️" 
-                                            Grid.Column="7"
+                                            Grid.Column="8"
                                             Background="Transparent"
                                             Foreground="Black"
                                             BorderBrush="LightGray"
@@ -173,7 +174,7 @@
                                             ToolTip.Tip="Auftrag bearbeiten"/>
                                         
                                         <Button Content="️🗑" 
-                                                Grid.Column="8"
+                                                Grid.Column="9"
                                                 Background="Transparent"
                                                 Foreground="Black"
                                                 BorderBrush="LightGray"
@@ -188,7 +189,7 @@
                                                 ToolTip.Tip="Auftrag löschen"/>
                                         
                                         <Button Content="Show" 
-                                                Grid.Column="9"
+                                                Grid.Column="10"
                                                 Background="Transparent"
                                                 Foreground="Black"
                                                 BorderBrush="LightGray"
@@ -203,7 +204,7 @@
                                                 ToolTip.Tip="Auftrag anzeigen"/>
                                         
                                         <Button Content="🖨️" 
-                                                Grid.Column="10"
+                                                Grid.Column="11"
                                                 Background="Transparent"
                                                 Foreground="Black"
                                                 BorderBrush="LightGray"
