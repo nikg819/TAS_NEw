@@ -16,7 +16,7 @@ public class InfoViewModel : ReactiveObject
     private readonly Window _window;
     private readonly ReactiveObject _viewModel;
 
-    public InfoViewModel(Window window, string message,int customerID, ReactiveObject viewModel)
+    public InfoViewModel(Window window, string message,int ID, ReactiveObject viewModel)
     {
         _window = window;
         Message = message;
@@ -31,7 +31,7 @@ public class InfoViewModel : ReactiveObject
             if (_viewModel is KundenlisteViewModel kundenliste)
             {
                 var db = new Database.Database();
-                bool deleted = await db.DeleteCustomer(customerID);
+                bool deleted = await db.DeleteCustomer(ID);
                 if (deleted)
                 {
                     Console.WriteLine("Kunde wird gelöscht");
@@ -47,7 +47,7 @@ public class InfoViewModel : ReactiveObject
             if (_viewModel is AllOrdersViewModel orderliste)
             {
                 var db = new Database.Database();
-                bool deleted = await db.DeleteOrder(customerID);
+                bool deleted = await db.DeleteOrder(ID);
                 if (deleted)
                 {
                     Console.WriteLine("Auftrag wird gelöscht");
@@ -57,6 +57,22 @@ public class InfoViewModel : ReactiveObject
                 else
                 {
                     orderliste.Subheader = "Der Auftrag kann nicht gelöscht werden";
+                    _window.Close();
+                }
+            }
+            if (_viewModel is AllArticlesViewModel articleliste)
+            {
+                var db = new Database.Database();
+                bool deleted = await db.DeleteArticle(ID);
+                if (deleted)
+                {
+                    Console.WriteLine("Artikel wird gelöscht");
+                    articleliste.CreateArticleList();
+                    _window.Close();
+                }
+                else
+                {
+                    articleliste.Subheader = "Der Artikel kann nicht gelöscht werden";
                     _window.Close();
                 }
             }

@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reactive;
 using ReactiveUI;
 using TAS_Test.Models;
@@ -9,6 +11,7 @@ public class ShowOrderViewModel : ReactiveObject
 {
     public Action<ReactiveObject>? Navigate { get; set; }
     public string Header { get; set; } 
+    public string Subheader { get; set; }
     public string ShowOrderOrderId { get; set; }
     public string ShowOrderKundenNamen { get; set; }
     public string ShowOrderFahrzeug { get; set; }
@@ -17,8 +20,17 @@ public class ShowOrderViewModel : ReactiveObject
     public string ShowOrderKundenbemerkungen { get; set; }
     public string ShowOrderMaximaleKosten { get; set; }
     public string ShowOrderReparaturen { get; set; }
-    public string ShowOrderTimestamp { get; set; }
+    public string ShowOrderCreationDate { get; set; }
     public string ShowOrderAuftragsdatum { get; set; }
+    public string ShowOrderLexwareId { get; set; }
+    public string ShowOrderKennzeichen { get; set; }
+    public string ShowOrderFModell { get; set; }
+    public string ShowOrderFFarbe { get; set; }
+    public string ShowOrderArtikelListe { get; set; }
+    public string ShowOrderOrderNotes { get; set; }
+    public string ShowOrderInvoiceCreated { get; set; }
+    public string ShowOrderInProgressSince { get; set; }
+    public string ShowOrderFinishedSince { get; set; }
     
     public ReactiveCommand<Unit, Unit> GoBack { get; }
     
@@ -38,17 +50,30 @@ public class ShowOrderViewModel : ReactiveObject
 
     private void ShowOrderData(Order order)
     {
-        Header = $"{order.auftragsnamen}";
+        var db = new Database.Database();
+        List<int> articleIdList = db.GetArticlesFromOrder(order.order_id);
+        var list = string.Join(", ", articleIdList.Select(id => db.GetArticleById(id).ArticleName));
         
-        ShowOrderOrderId = $"{order.order_id}";
+        Header = $"{order.auftragsnamen}";
+        Subheader = $"Auftragsnummer: {order.order_id}";
+        
         ShowOrderKundenNamen = $"{order.name}";
-        ShowOrderFahrzeug = $"{order.fahrzeug}";
         ShowOrderMail = $"{order.mail}";
         ShowOrderPhone = $"{order.phone}";
-        ShowOrderKundenbemerkungen = $"{order.kundenbemerkungen}";
-        ShowOrderMaximaleKosten = $"{order.maxKosten}";
-        ShowOrderReparaturen = $"{order.reparaturen}";
-        ShowOrderTimestamp = $"{order.timestamp}";
+        ShowOrderLexwareId = $"{order.lexwareId}";
+        
+        ShowOrderKennzeichen = $"{order.kennzeichen}";
+        ShowOrderFModell = $"{order.vehicleModel}";
+        ShowOrderFFarbe = $"{order.vehicleColour}";
+        
         ShowOrderAuftragsdatum = $"{order.auftragsdatum}";
+        ShowOrderArtikelListe = $"{list}";
+        ShowOrderOrderNotes = $"{order.orderNotes}";
+        ShowOrderMaximaleKosten = $"{order.maxKosten}";
+
+        ShowOrderCreationDate = $"{order.creationDate}";
+        ShowOrderInProgressSince = $"{order.inProgressSince}";
+        ShowOrderInvoiceCreated = $"{order.invoiceCreatedDate}";
+        ShowOrderFinishedSince = $"{order.orderFinishedDate}";
     }
 }

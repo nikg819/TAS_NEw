@@ -11,10 +11,10 @@ public class NewCustomerViewModel : ReactiveObject
     public ReactiveCommand<Unit, Unit> ButtonAddNewCustomer { get; }
     
     public string InputName { get; set; }
-    public string InputFahrzeug { get; set; }
     public string InputMail { get; set; }
     public string InputPhone { get; set; }
     public string InputNotes { get; set; }
+    public string InputLexwareId { get; set; }
     
     private string _subheader = "";
 
@@ -38,7 +38,7 @@ public class NewCustomerViewModel : ReactiveObject
             Customer k = new Customer(
                 1,
                 InputName ?? "",
-                InputFahrzeug ?? "",
+                InputLexwareId ?? "",
                 InputMail ?? "",
                 InputPhone ?? "",
                 InputNotes ?? "");

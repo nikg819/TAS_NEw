@@ -5,6 +5,7 @@ using System.Reactive;
 using System.Reflection.Metadata.Ecma335;
 using ReactiveUI;
 using TAS_Test.Models;
+using TAS_Test.Views;
 
 namespace TAS_Test.ViewModels;
 
@@ -32,9 +33,9 @@ public class AllArticlesViewModel : ReactiveObject
         set => this.RaiseAndSetIfChanged(ref _searchText, value);
     }
     public ReactiveCommand<string, Unit> SearchCommand { get; }
-    
     public ReactiveCommand<Article, Unit> EditCommand { get; }
     public ReactiveCommand<Article, Unit> DeleteCommand { get; }
+    public ReactiveCommand<Unit, Unit> NewArticle { get; }
 
     public AllArticlesViewModel()
     {
@@ -42,6 +43,7 @@ public class AllArticlesViewModel : ReactiveObject
         
         EditCommand = ReactiveCommand.Create<Article>(EditArticle);
         DeleteCommand = ReactiveCommand.Create<Article>(DeleteArticle);
+        NewArticle = ReactiveCommand.Create(AddNewArticle);
 
         CreateArticleList();
     }
@@ -53,10 +55,21 @@ public class AllArticlesViewModel : ReactiveObject
 
     private void DeleteArticle(Article article)
     {
-        Console.WriteLine("DeleteArticle");
+        string message = $"Willst du {article.ArticleName} löschen?";
+        var infowindow = new InfoWindow();
+        infowindow.DataContext = new InfoViewModel(infowindow, message, article.ArticleDatabaseId,this);
+        infowindow.Show();
     }
 
-    private void CreateArticleList()
+    private void AddNewArticle()
+    {
+        var newarticlevm = new NewArticleViewModel();
+        newarticlevm.Navigate = Navigate;
+        Navigate?.Invoke(newarticlevm);
+        
+    }
+
+    public void CreateArticleList()
     {
         var db = new Database.Database();
         var allArticles = db.GetAllArticles();

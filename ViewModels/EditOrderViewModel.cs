@@ -26,7 +26,7 @@ public class EditOrderViewModel : ReactiveObject
         InputAuftragsnamen = order.auftragsnamen;
         InputAuftragsdatum = order.auftragsdatum;
         InputMaxKosten = order.maxKosten;
-        InputReparaturen = order.reparaturen;
+        InputReparaturen = order.orderNotes;
         
         UpdateOrder = ReactiveCommand.Create(() => OrderSafeButton(order));
     }

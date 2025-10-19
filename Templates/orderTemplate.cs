@@ -101,14 +101,14 @@ class orderTemplate
 
                 <div class=""info-block"">
                     <div class=""info-line""><span>Kunde:</span> {order.name}</div>
-                    <div class=""info-line""><span>Fahrzeug:</span> {order.fahrzeug}</div>
+                    <div class=""info-line""><span>Fahrzeug:</span> {order.name}</div>
                     <div class=""info-line""><span>E-Mail:</span> {order.mail}</div>
                     <div class=""info-line""><span>Telefon:</span> {order.phone}</div>
                 </div>
 
                 <div class=""section"">
                     <h2>To-Do</h2>
-                    <div class=""todo-box"">{order.reparaturen}</div>
+                    <div class=""todo-box"">{order.orderNotes}</div>
                 </div>
 
                 <div class=""section"">

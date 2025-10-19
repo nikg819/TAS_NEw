@@ -73,7 +73,7 @@ public class MainWindow_ViewModel : ReactiveObject
     {
         var articlesVm = new AllArticlesViewModel();
         articlesVm.Navigate = _navigateAction;
-        CurrentView = new AllArticlesViewModel();
+        CurrentView = articlesVm;
     }
     private void OpenSettings()
     {

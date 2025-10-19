@@ -14,53 +14,74 @@
         <Border Background="#F5F5F5">
             <StackPanel Margin="20">
                 <StackPanel Name="Kopfzeile">
-                    <TextBlock Text="{Binding Header}" Name="Header"
+                    <TextBlock Text="{Binding Header}"
                                FontSize="24" 
                                FontWeight="Bold"
                                Foreground="Black"
                                Margin="0,0,0,20"/>
+                    <TextBlock Text="{Binding Subheader}"
+                               FontSize="12" 
+                               Foreground="Black"
+                               Margin="0,0,0,20"/>
                     
                 </StackPanel>
-                <Border Background="White"
-                        Margin="0,20,0,0"
-                        Padding="15"
-                        Name="BorderShowOrder">
-                    <StackPanel Name="ShowOrderPanel">
-                        <Grid ColumnDefinitions="Auto,20, *" RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto">
-                                
-                            <TextBlock Text="Auftragsnummer:" Foreground="Black" Grid.Column="0" Grid.Row = "0" VerticalAlignment="Center" TextAlignment="Right" />
-                            <TextBlock Text="{Binding ShowOrderOrderId}" Margin="5" Width="180" HorizontalAlignment="Left" Grid.Column="2" Grid.Row = "0" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray"/>
-                            <TextBlock Text="Kunde:" Foreground="Black" Grid.Column="0" Grid.Row = "1" VerticalAlignment="Center" TextAlignment="Right"/>
-                            <TextBlock Text="{Binding ShowOrderKundenNamen}" Margin="5" Width="180" HorizontalAlignment="Left" Grid.Column="2" Grid.Row = "1" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray"/>
-                            <TextBlock Text="Fahrzeug:" Foreground="Black" Grid.Column="0" Grid.Row = "2" VerticalAlignment="Center" TextAlignment="Right"/>
-                            <TextBlock Text="{Binding ShowOrderFahrzeug}" Margin="5" Width="180" HorizontalAlignment="Left" Grid.Column="2" Grid.Row = "2" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray" />
-                            <TextBlock Text="Mailadresse:" Foreground="Black" Grid.Column="0" Grid.Row = "3" VerticalAlignment="Center" TextAlignment="Right"/>
-                            <TextBlock Text="{Binding ShowOrderMail}" Margin="5" Width="180" HorizontalAlignment="Left" Grid.Column="2" Grid.Row = "3" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray" />
-                            <TextBlock Text="Telefonnummer:" Foreground="Black" Grid.Column="0" Grid.Row = "4" VerticalAlignment="Center" TextAlignment="Right"/>
-                            <TextBlock Text="{Binding ShowOrderPhone}" Margin="5" Width="180" HorizontalAlignment="Left" Grid.Column="2" Grid.Row = "4" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray" />
-                            <TextBlock Text="Kundenbemerkung:" Foreground="Black" Grid.Column="0" Grid.Row = "5" VerticalAlignment="Center" TextAlignment="Right"/>
-                            <TextBlock Text="{Binding ShowOrderKundenbemerkungen}" Margin="5" Width="400" HorizontalAlignment="Left" Grid.Column="2" Grid.Row = "5" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray" TextWrapping="Wrap"/>
-                            <TextBlock Text="Maximale Kosten:" Foreground="Black" Grid.Column="0" Grid.Row = "6" VerticalAlignment="Center" TextAlignment="Right"/>
-                            <TextBlock Text="{Binding ShowOrderMaximaleKosten}" Margin="5" Width="180" HorizontalAlignment="Left" Grid.Column="2" Grid.Row = "6" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray"/>
-                            <TextBlock Text="Reparaturen:" Foreground="Black" Grid.Column="0" Grid.Row = "7" VerticalAlignment="Center" TextAlignment="Right"/>
-                            <TextBlock Text="{Binding ShowOrderReparaturen}" Margin="5" Width="400" HorizontalAlignment="Left" Grid.Column="2" Grid.Row = "7" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray" TextWrapping="Wrap"/>
-                            <TextBlock Grid.Row="8" Grid.Column="0"/>
-                            <TextBlock Text="Auftrag erstellt am:" Foreground="Black" Grid.Row="9" Grid.Column="0" VerticalAlignment="Center" TextAlignment="Right"/>
-                            <TextBlock Text="{Binding ShowOrderTimestamp}" Grid.Row="9" Grid.Column="2" Margin="5" Width="400" HorizontalAlignment="Left" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray" TextWrapping="Wrap"/>
-                            <TextBlock Text="Bis wann:" Foreground="Black" Grid.Row="10" Grid.Column="0" VerticalAlignment="Center" TextAlignment="Right"/>
-                            <TextBlock Text="{Binding ShowOrderAuftragsdatum}" Grid.Row="10" Grid.Column="2" Margin="5" Width="400" HorizontalAlignment="Left" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray" TextWrapping="Wrap"/>
-
+                    <StackPanel>
+                        <Grid RowDefinitions="Auto, Auto, Auto, Auto" ColumnDefinitions="4*,6*">
+                            <Border Grid.Row="0" Background="White" Margin="10" CornerRadius="5" Padding="10">
+                                <Grid RowDefinitions="Auto,Auto,Auto,Auto" ColumnDefinitions="190,*,5*" HorizontalAlignment="Left">
+                                    <TextBlock Text="Kunde:" Grid.Column="0" Grid.Row = "0" Foreground="Black" VerticalAlignment="Center" TextAlignment="Right" />
+                                    <TextBlock Text="{Binding ShowOrderKundenNamen}" Grid.Column="2" Grid.Row = "0" Margin="5" HorizontalAlignment="Left" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray" TextWrapping="Wrap"/>
+                                    <TextBlock Text="Mail:" Grid.Column="0" Grid.Row = "1" Foreground="Black" VerticalAlignment="Center" TextAlignment="Right" />
+                                    <TextBlock Text="{Binding ShowOrderMail}" Grid.Column="2" Grid.Row = "1" Margin="5"  HorizontalAlignment="Left" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray" TextWrapping="Wrap"/>
+                                    <TextBlock Text="Telefonnummer:" Grid.Column="0" Grid.Row = "2" Foreground="Black" VerticalAlignment="Center" TextAlignment="Right" />
+                                    <TextBlock Text="{Binding ShowOrderPhone}" Grid.Column="2" Grid.Row = "2" Margin="5" HorizontalAlignment="Left" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray" TextWrapping="Wrap"/>
+                                    <TextBlock Text="LexwareID:" Grid.Column="0" Grid.Row = "3" Foreground="Black" VerticalAlignment="Center" TextAlignment="Right" />
+                                    <TextBlock Text="{Binding ShowOrderLexwareId}" Grid.Column="2" Grid.Row = "3" Margin="5" HorizontalAlignment="Left" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray" TextWrapping="Wrap"/>
+                                </Grid>
+                            </Border>
+                            <Border Grid.Row="1" Background="White" Margin="10" CornerRadius="5" Padding="10">
+                                <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="190,*,5*" HorizontalAlignment="Left">
+                                    <TextBlock Text="Kennzeichen:" Grid.Column="0" Grid.Row = "0" Foreground="Black" VerticalAlignment="Center" TextAlignment="Right" />
+                                    <TextBlock Text="{Binding ShowOrderKennzeichen}" Grid.Column="2" Grid.Row = "0" Margin="5" HorizontalAlignment="Left" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray" TextWrapping="Wrap"/>
+                                    <TextBlock Text="Fahrzeugmodell:" Grid.Column="0" Grid.Row = "1" Foreground="Black" VerticalAlignment="Center" TextAlignment="Right" />
+                                    <TextBlock Text="{Binding ShowOrderFModell}" Grid.Column="2" Grid.Row = "1" Margin="5" HorizontalAlignment="Left" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray" TextWrapping="Wrap"/>
+                                    <TextBlock Text="Fahrzeugfarbe:" Grid.Column="0" Grid.Row = "2" Foreground="Black" VerticalAlignment="Center" TextAlignment="Right" />
+                                    <TextBlock Text="{Binding ShowOrderFFarbe}" Grid.Column="2" Grid.Row = "2" Margin="5" HorizontalAlignment="Left" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray" TextWrapping="Wrap"/>
+                                </Grid>
+                            </Border>
+                            <Border Grid.Row="2" Background="White" Margin="10" CornerRadius="5" Padding="10">
+                                <Grid RowDefinitions="Auto,Auto,Auto,Auto" ColumnDefinitions="190,*,5*" HorizontalAlignment="Left">
+                                    <TextBlock Text="Bis wann:" Grid.Column="0" Grid.Row = "0" Foreground="Black" VerticalAlignment="Center" TextAlignment="Right" />
+                                    <TextBlock Text="{Binding ShowOrderAuftragsdatum}" Grid.Column="2" Grid.Row = "0" Margin="5" HorizontalAlignment="Left" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray" TextWrapping="Wrap"/>
+                                    <TextBlock Text="Artikel:" Grid.Column="0" Grid.Row = "1" Foreground="Black" VerticalAlignment="Center" TextAlignment="Right" />
+                                    <TextBlock Text="{Binding ShowOrderArtikelListe}" Grid.Column="2" Grid.Row = "1" Margin="5" HorizontalAlignment="Left" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray" TextWrapping="Wrap"/>
+                                    <TextBlock Text="Bemerkungen:" Grid.Column="0" Grid.Row = "2" Foreground="Black" VerticalAlignment="Center" TextAlignment="Right" />
+                                    <TextBlock Text="{Binding ShowOrderOrderNotes}" Grid.Column="2" Grid.Row = "2" Margin="5" HorizontalAlignment="Left" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray" TextWrapping="Wrap"/>
+                                    <TextBlock Text="Maximale Kosten:" Grid.Column="0" Grid.Row = "3" Foreground="Black" VerticalAlignment="Center" TextAlignment="Right" />
+                                    <TextBlock Text="{Binding ShowOrderMaximaleKosten}" Grid.Column="2" Grid.Row = "3" Margin="5" HorizontalAlignment="Left" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray" TextWrapping="Wrap"/>
+                                </Grid>
+                            </Border>
+                            <Border Grid.Row="3" Background="White" Margin="10" CornerRadius="5" Padding="10">
+                                <Grid RowDefinitions="Auto,Auto,Auto,Auto" ColumnDefinitions="190,*,5*" HorizontalAlignment="Left">
+                                    <TextBlock Text="Auftrag erstellt am:" Grid.Column="0" Grid.Row = "0" Foreground="Black" VerticalAlignment="Center" TextAlignment="Right" />
+                                    <TextBlock Text="{Binding ShowOrderCreationDate}" Grid.Column="2" Grid.Row = "0" Margin="5" HorizontalAlignment="Left" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray" TextWrapping="Wrap"/>
+                                    <TextBlock Text="In Bearbeitung seit:" Grid.Column="0" Grid.Row = "1" Foreground="Black" VerticalAlignment="Center" TextAlignment="Right" />
+                                    <TextBlock Text="{Binding ShowOrderInProgressSince}" Grid.Column="2" Grid.Row = "1" Margin="5" HorizontalAlignment="Left" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray" TextWrapping="Wrap"/>
+                                    <TextBlock Text="Rechnung erstellt am:" Grid.Column="0" Grid.Row = "2" Foreground="Black" VerticalAlignment="Center" TextAlignment="Right" />
+                                    <TextBlock Text="{Binding ShowOrderInvoiceCreated}" Grid.Column="2" Grid.Row = "2" Margin="5" HorizontalAlignment="Left" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray" TextWrapping="Wrap"/>
+                                    <TextBlock Text="Auftrag abgeschlossen seit:" Grid.Column="0" Grid.Row = "3" Foreground="Black" VerticalAlignment="Center" TextAlignment="Right" />
+                                    <TextBlock Text="{Binding ShowOrderFinishedSince}" Grid.Column="2" Grid.Row = "3" Margin="5" HorizontalAlignment="Left" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray" TextWrapping="Wrap"/>
+                                </Grid>
+                            </Border>
                         </Grid>
                     </StackPanel>
-                </Border>
                 
-                <Button Content="Zurück" Grid.Row="2"
-                        Name="NewCustomer"
+                <Button Content="Zurück"
                         Command="{Binding GoBack}"
                         Background="LightGray"
                         Foreground="Black"
                         BorderThickness="0"
-                        HorizontalAlignment="Right"
+                        HorizontalAlignment="Left"
                         Padding="10,8"
                         Margin="0,15"/>
             </StackPanel>

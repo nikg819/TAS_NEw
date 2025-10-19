@@ -39,8 +39,8 @@
                                 
                                 <TextBlock Text="Name:*" Foreground="Black" Grid.Column="0" Grid.Row = "0" VerticalAlignment="Center"/>
                                 <TextBox Name="InputName" Text="{Binding InputName, Mode=TwoWay}" Margin="5" Width="300" HorizontalAlignment="Left" Grid.Column="1" Grid.Row = "0" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray" BorderBrush="Gray"/>
-                                <TextBlock Text="Fahrzeug:" Foreground="Black" Grid.Column="0" Grid.Row = "1" VerticalAlignment="Center"/>
-                                <TextBox Name="InputFahrzeug" Text="{Binding InputFahrzeug, Mode=TwoWay}" Margin="5" Width="300" HorizontalAlignment="Left" Grid.Column="1" Grid.Row = "1" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray" BorderBrush="Gray"/>
+                                <TextBlock Text="LexwareID:" Foreground="Black" Grid.Column="0" Grid.Row = "1" VerticalAlignment="Center"/>
+                                <TextBox Name="InputLexwareId" Text="{Binding InputLexwareId, Mode=TwoWay}" Margin="5" Width="300" HorizontalAlignment="Left" Grid.Column="1" Grid.Row = "1" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray" BorderBrush="Gray"/>
                                 <TextBlock Text="Mailadresse:" Foreground="Black" Grid.Column="0" Grid.Row = "2" VerticalAlignment="Center"/>
                                 <TextBox Name="InputMail" Text="{Binding InputMail, Mode=TwoWay}" Margin="5" Width="300" HorizontalAlignment="Left" Grid.Column="1" Grid.Row = "2" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray" BorderBrush="Gray"/>
                                 <TextBlock Text="Telefonnummer:" Foreground="Black" Grid.Column="0" Grid.Row = "3" VerticalAlignment="Center"/>

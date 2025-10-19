@@ -46,6 +46,9 @@
         <DataTemplate DataType="viewModels:AllArticlesViewModel">
             <views2:AllArticles />
         </DataTemplate>
+        <DataTemplate DataType="viewModels:NewArticleViewModel">
+            <views2:NewArticle />
+        </DataTemplate>
     </Window.DataTemplates>
     
     <Grid>

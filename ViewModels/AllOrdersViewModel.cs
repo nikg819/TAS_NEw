@@ -97,7 +97,7 @@ public class AllOrdersViewModel : ReactiveObject
     private void ErledigtOrder(Order order)
     {
         var db = new Database.Database();
-        db.ChangeStatus(order);
+        db.ChangeStatus(order, order.status +1);
         CreateOrderlist();
     }
 
@@ -147,7 +147,9 @@ public class AllOrdersViewModel : ReactiveObject
         var allOrders = db.GetAllOrders(SortOrder);
         Subheader = $"Anzahl Aufträge: {allOrders.Count}";
         AllOrders = new ObservableCollection<Order>(allOrders);
+        Console.WriteLine(AllOrders);
     }
+    
     
     
 }

@@ -10,13 +10,14 @@ public class Customer : ReactiveObject
     public string mail {get; set;}
     public string phone {get; set;}
     public string? notes {get; set;}
+    public string? lexwareId {get; set;}
     public Customer() { }
     
-    public Customer(int k_id, string name, string fahrzeug, string mail, string phone, string? notes = "")
+    public Customer(int k_id, string name, string lexwareId, string mail, string phone, string? notes)
     {
         this.k_id = k_id;
         this.name = name ?? "";
-        this.fahrzeug = fahrzeug ?? "";
+        this.lexwareId = lexwareId;
         this.mail = mail ?? "";
         this.phone = phone ?? "";
         this.notes = notes ?? "";

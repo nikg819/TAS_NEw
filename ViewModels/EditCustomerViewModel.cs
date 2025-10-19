@@ -19,7 +19,7 @@ public class EditCustomerViewModel : ReactiveObject
     }
 
     public string InputName { get; set; }
-    public string InputFahrzeug { get; set; }
+    public string InputLexwareId { get; set; }
     public string InputMail { get; set; }
     public string InputPhone { get; set; }
     public string InputNotes { get; set; }
@@ -31,7 +31,7 @@ public class EditCustomerViewModel : ReactiveObject
         Subheader = $"Kundennummer: {customer.k_id}";
         
         InputName = customer.name;
-        InputFahrzeug = customer.fahrzeug;
+        InputLexwareId = customer.lexwareId;
         InputMail = customer.mail;
         InputPhone = customer.phone;
         InputNotes = customer.notes;
@@ -44,7 +44,7 @@ public class EditCustomerViewModel : ReactiveObject
         if (!string.IsNullOrWhiteSpace(InputName))
         {
             var db = new Database.Database();
-            db.UpdateCustomer(customer.k_id, InputName, InputFahrzeug, InputMail, InputPhone, InputNotes);
+            db.UpdateCustomer(customer.k_id, InputName, InputLexwareId, InputMail, InputPhone, InputNotes);
         
             var kundenlistevm = new KundenlisteViewModel();
             kundenlistevm.CreateCustomerlist();
