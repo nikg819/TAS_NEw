@@ -1,3 +1,4 @@
+using System;
 using Avalonia.Media;
 using ReactiveUI;
 
@@ -38,8 +39,9 @@ public class Order : ReactiveObject
         status switch
         {
             1 => new SolidColorBrush(Colors.LightGreen),
-            2 => new SolidColorBrush(Colors.Orange),
-            3 => new SolidColorBrush(Colors.Red),
+            2 => setInProgressSince(this),
+            3 => setInvoiceCreatedDate(this),
+            4 => setFinishedOrderDate(this),
             _ => new SolidColorBrush(Colors.Gray)
         };
 
@@ -64,6 +66,40 @@ public class Order : ReactiveObject
         this.k_id = k_id; //FK Kunde
         this.orderNotes = orderNotes;
         this.creationDate = creationDate;
+    }
+
+    private SolidColorBrush setInProgressSince(Order order)
+    {
+        DateTime time = DateTime.Now;
+        string inProgressSince = time.ToString("dd.MM.yyyy 'um' HH:mm:ss");
+        var db = new Database.Database();
+        db.NewTimestamp("inProgressSince",inProgressSince, order);
+        
+        return new SolidColorBrush(Colors.Orange);
+    }
+
+    private SolidColorBrush setInvoiceCreatedDate(Order order)
+    {
+        //hier muss erst noch eine fenster geöffnet werden und gefragt werden ob alles so stimmt, danach erst timestamp und pdf erzeugen
+        
+        DateTime time = DateTime.Now;
+        string date = time.ToString("dd.MM.yyyy 'um' HH:mm:ss");
+        var db = new Database.Database();
+        db.NewTimestamp("invoiceCreatedDate",date, order);
+        
+        //rechnungsvorlage erstellen
+        
+        return new SolidColorBrush(Colors.Red);
+    }
+
+    private SolidColorBrush setFinishedOrderDate(Order order)
+    {
+        DateTime time = DateTime.Now;
+        string date = time.ToString("dd.MM.yyyy 'um' HH:mm:ss");
+        var db = new Database.Database();
+        db.NewTimestamp("orderFinishedDate",date, order);
+        
+        return new SolidColorBrush(Colors.Gray);
     }
 }
 

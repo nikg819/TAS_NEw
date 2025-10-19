@@ -392,6 +392,21 @@ namespace TAS_Test.Database
             command.ExecuteNonQuery();
             return true;
         }
+        
+        //fügt einen neuen timestamp hinzu
+        public void NewTimestamp(string timestamp, string date, Order order)
+        {
+            using var connection = new SqliteConnection($"Data Source={_dbPath}");
+            connection.Open();
+
+            using var command = connection.CreateCommand();
+            command.CommandText =
+                @$"UPDATE 'order' SET {timestamp}=@date WHERE order_id=@id";
+
+            command.Parameters.AddWithValue("@date", date ?? string.Empty);
+            command.Parameters.AddWithValue("@id", order.order_id);
+            command.ExecuteNonQuery();
+        }
 
         //-----------------------------------------Archivaufträge----------------------------------
 
@@ -405,7 +420,7 @@ namespace TAS_Test.Database
 
             using var command = connection.CreateCommand();
             command.CommandText =
-                "SELECT o.order_id, o.auftragsdatum, o.max_kosten, o.status, o.auftragsnamen, k.k_id, k.name, k.fahrzeug, o.reperaturen, o.timestamp FROM 'order' AS o JOIN kundendaten AS k ON o.k_id = k.k_id WHERE o.status = 0;";
+                "SELECT o.order_id, o.auftragsdatum, o.max_kosten, o.status, o.auftragsnamen, k.k_id, k.name, k.lexwareID, o.bemerkungen, o.creationDate FROM 'order' AS o JOIN kundendaten AS k ON o.k_id = k.k_id WHERE o.status = 4;";
 
             using var reader = command.ExecuteReader();
 

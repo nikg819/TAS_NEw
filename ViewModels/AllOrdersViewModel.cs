@@ -147,7 +147,6 @@ public class AllOrdersViewModel : ReactiveObject
         var allOrders = db.GetAllOrders(SortOrder);
         Subheader = $"Anzahl Aufträge: {allOrders.Count}";
         AllOrders = new ObservableCollection<Order>(allOrders);
-        Console.WriteLine(AllOrders);
     }
     
     
