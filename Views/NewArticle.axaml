@@ -41,9 +41,10 @@
                                 <TextBox Name="InputAuftragsdatum" Text="{Binding InputArticleName, Mode=TwoWay}" Margin="5" Width="300" HorizontalAlignment="Left" Grid.Column="1" Grid.Row = "1" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray" BorderBrush="Gray" TextWrapping="Wrap" AcceptsReturn="True"/>
                                 <TextBlock Text="Beschreibung:" Foreground="Black" Grid.Column="0" Grid.Row = "2" VerticalAlignment="Center"/>
                                 <TextBox Name="InputReparaturen" Text="{Binding InputArticleDescription, Mode=TwoWay}" Margin="5" Width="300" Height="100" HorizontalAlignment="Left" Grid.Column="1" Grid.Row = "2" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray" BorderBrush="Gray" TextWrapping="Wrap" AcceptsReturn="True"/>
-                                <TextBlock Text="Preis:" Foreground="Black" Grid.Column="0" Grid.Row = "3" VerticalAlignment="Center"/>
-                                <TextBox Name="InputMaximaleKosten" Text="{Binding InputArticlePrice, Mode=TwoWay}" Margin="5" Width="300"  HorizontalAlignment="Left" Grid.Column="1" Grid.Row = "3" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray" BorderBrush="Gray" TextWrapping="Wrap" AcceptsReturn="True"/>
-                                
+                                <StackPanel Grid.Column="1" Grid.Row="3" Orientation="Horizontal">
+                                    <TextBox Text="{Binding InputArticlePrice, Mode=TwoWay}" Margin="5" Width="60"  HorizontalAlignment="Left" VerticalAlignment="Center" Background="Transparent" Foreground="DimGray" BorderBrush="Gray" TextWrapping="Wrap" AcceptsReturn="True"/>
+                                    <TextBlock Text="€" Foreground="Black" VerticalAlignment="Center"/>
+                                </StackPanel>
                         </Grid>
                     </StackPanel>
                 </Border>

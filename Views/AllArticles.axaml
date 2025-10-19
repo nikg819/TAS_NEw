@@ -68,7 +68,10 @@
                                         <TextBlock Text="{Binding ArticleNumber}" Grid.Column="0" Foreground="Gray" TextWrapping="Wrap" />
                                         <TextBlock Text="{Binding ArticleName}" Grid.Column="1" Foreground="Gray" TextWrapping="Wrap"/>
                                         <TextBlock Text="{Binding ArticleDescription}" Grid.Column="2" Foreground="Gray" TextWrapping="Wrap" />
-                                        <TextBlock Text="{Binding ArticlePrice}" Grid.Column="3" Foreground="Gray" TextWrapping="Wrap"/>
+                                        <TextBlock Grid.Column="3" Foreground="Gray" TextWrapping="Wrap">
+                                            <Run Text="{Binding ArticlePrice}" />
+                                            <Run Text="€" />
+                                        </TextBlock>
                                         
                                         <Button Content="✏️" 
                                             Grid.Column="4"

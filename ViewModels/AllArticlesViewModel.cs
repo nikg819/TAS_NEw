@@ -39,8 +39,6 @@ public class AllArticlesViewModel : ReactiveObject
 
     public AllArticlesViewModel()
     {
-        Subheader = "Anzahl Artikel: 1";
-        
         EditCommand = ReactiveCommand.Create<Article>(EditArticle);
         DeleteCommand = ReactiveCommand.Create<Article>(DeleteArticle);
         NewArticle = ReactiveCommand.Create(AddNewArticle);
@@ -74,5 +72,6 @@ public class AllArticlesViewModel : ReactiveObject
         var db = new Database.Database();
         var allArticles = db.GetAllArticles();
         AllArticles = new ObservableCollection<Article>(allArticles);
+        Subheader = $"Anzahl Artikel: {allArticles.Count}";
     }
 }
