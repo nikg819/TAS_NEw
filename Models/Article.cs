@@ -9,6 +9,7 @@ public class Article :ReactiveObject
     public string ArticleName { get; set; }
     public string ArticleDescription { get; set; }
     public string ArticlePrice { get; set; }
+    
     private bool _isChecked;
     public bool IsChecked
     {

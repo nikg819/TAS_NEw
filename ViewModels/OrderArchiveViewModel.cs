@@ -60,7 +60,7 @@ public class OrderArchiveViewModel : ReactiveObject
     private void ReactivateOrder(Order order)
     {
         var db = new Database.Database();
-        db.ChangeReactivateStatus(order);
+        db.ChangeStatus(order, 3);
         CreateArchiveOrderlist();
     }
     

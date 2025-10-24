@@ -227,15 +227,24 @@ namespace TAS_Test.Database
             using var command = connection.CreateCommand();
             command.CommandText = @"
                         SELECT o.order_id,
-                               k.name, 
-                               o.auftragsnamen, 
-                               k.lexwareID, 
-                               o.auftragsdatum, 
-                               o.max_kosten, 
-                               o.bemerkungen,
-                               v.vehicleModel,
-                               v.vehicleColour,
-                               v.kennzeichen
+                         o.auftragsnamen,
+                         o.auftragsdatum, 
+                         o.max_kosten, 
+                         o.status, 
+                         o.bemerkungen, 
+                         o.creationDate,
+                         o.orderFinishedDate,
+                         o.inProgressSince,
+                         k.k_id, 
+                         k.name, 
+                         k.lexwareID,
+                         k.mail,
+                         k.phone, 
+                         k.notes,
+                         v.vehicleModel,
+                         v.vehicleColour,
+                         v.kennzeichen,
+                         o.invoiceCreatedDate
                         FROM 'order' AS o
                         JOIN 'kundendaten' AS k ON o.k_id = k.k_id
                         JOIN vehicles AS v ON o.vehicleId = v.vehicleId
@@ -262,15 +271,24 @@ namespace TAS_Test.Database
                 orderListe.Add(new Order
                 {
                     order_id = reader.GetInt32(0),
-                    name = reader.IsDBNull(1) ? null : reader.GetString(1),
-                    auftragsnamen = reader.IsDBNull(2) ? null : reader.GetString(2),
-                    lexwareId = reader.IsDBNull(3) ? null : reader.GetString(3),
-                    auftragsdatum = reader.IsDBNull(4) ? null : reader.GetString(4),
-                    maxKosten = reader.IsDBNull(5) ? null : reader.GetString(5),
-                    orderNotes = reader.IsDBNull(6) ? null : reader.GetString(6),
-                    vehicleModel = reader.IsDBNull(7) ? null : reader.GetString(7),
-                    vehicleColour = reader.IsDBNull(8) ? null : reader.GetString(8),
-                    kennzeichen = reader.IsDBNull(9) ? null : reader.GetString(9),
+                    auftragsnamen = reader.IsDBNull(1) ? null : reader.GetString(1),
+                    auftragsdatum = reader.IsDBNull(2) ? null : reader.GetString(2),
+                    maxKosten = reader.IsDBNull(3) ? null : reader.GetString(3),
+                    status = reader.GetInt32(4),
+                    orderNotes = reader.IsDBNull(5) ? null : reader.GetString(5),
+                    creationDate = reader.IsDBNull(6) ? null : reader.GetString(6),
+                    orderFinishedDate = reader.IsDBNull(7) ? null : reader.GetString(7),
+                    inProgressSince = reader.IsDBNull(8) ? null : reader.GetString(8),
+                    k_id = reader.GetInt32(9),
+                    name = reader.IsDBNull(10) ? null : reader.GetString(10),
+                    lexwareId = reader.IsDBNull(11) ? null : reader.GetString(11),
+                    mail = reader.IsDBNull(12) ? null : reader.GetString(12),
+                    phone = reader.IsDBNull(13) ? null : reader.GetString(13),
+                    kundenbemerkungen = reader.IsDBNull(14) ? null : reader.GetString(14),
+                    vehicleModel = reader.IsDBNull(15) ? null : reader.GetString(15),
+                    vehicleColour = reader.IsDBNull(16) ? null : reader.GetString(16),
+                    kennzeichen = reader.IsDBNull(17) ? null : reader.GetString(17),
+                    invoiceCreatedDate = reader.IsDBNull(18) ? null : reader.GetString(18),
                 });
             }
 
@@ -485,20 +503,6 @@ namespace TAS_Test.Database
             }
 
             return archiveorderListe;
-        }
-
-        //Reaktiviere Auftrag
-        public void ChangeReactivateStatus(Order order)
-        {
-            using var connection = new SqliteConnection($"Data Source={_dbPath}");
-            connection.Open();
-
-            using var command = connection.CreateCommand();
-            command.CommandText = @"UPDATE 'order' SET status=@status WHERE order_id=@id";
-
-            command.Parameters.AddWithValue("@status", "1");
-            command.Parameters.AddWithValue("@id", order.order_id);
-            command.ExecuteNonQuery();
         }
 
         //-----------------------------------Artikelverwaltung---------------------------------------------

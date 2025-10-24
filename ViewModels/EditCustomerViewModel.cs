@@ -54,7 +54,7 @@ public class EditCustomerViewModel : ReactiveObject
         }
         else
         {
-            Subheader2 = "Kunde wurde nicht gespeichert. Name fehlt";
+            Subheader2 = "❌ Kunde wurde nicht gespeichert. Name fehlt";
         }
         
     }

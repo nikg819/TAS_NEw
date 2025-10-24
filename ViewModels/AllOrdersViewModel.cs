@@ -32,7 +32,11 @@ public class AllOrdersViewModel : ReactiveObject
     public string SearchText
     {
         get => _searchText;
-        set => this.RaiseAndSetIfChanged(ref _searchText, value);
+        set
+        {
+            this.RaiseAndSetIfChanged(ref _searchText, value);
+            SearchOrder(_searchText);
+        }
     }
     public ReactiveCommand<string, Unit> SearchCommand { get; }
     
@@ -67,7 +71,6 @@ public class AllOrdersViewModel : ReactiveObject
     
     public AllOrdersViewModel()
     {
-        SearchCommand = ReactiveCommand.Create<string>(SearchOrder);
         ErledigtCommand = ReactiveCommand.Create<Order>(ErledigtOrder);
         EditCommand = ReactiveCommand.Create<Order>(EditOrder);
         DeleteCommand = ReactiveCommand.Create<Order>(DeleteOrder);
@@ -85,11 +88,9 @@ public class AllOrdersViewModel : ReactiveObject
             var searchList = db.FindOrderBySearch(searchText);
             Subheader = $"Anzahl Aufträge: {searchList.Count}";
             AllOrders = new ObservableCollection<Order>(searchList);
-            SearchText = "";
         }
         else
         {
-            SearchText = "";
             CreateOrderlist();
         }
     }

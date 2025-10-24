@@ -39,7 +39,11 @@ public class KundenlisteViewModel : ReactiveObject
     public string SearchText
     {
         get => _searchText;
-        set => this.RaiseAndSetIfChanged(ref _searchText, value);
+        set
+        {
+            this.RaiseAndSetIfChanged(ref _searchText, value);
+            SearchCustomer(_searchText);
+        }
     }
     
     //View Konstruktor
@@ -71,11 +75,9 @@ public class KundenlisteViewModel : ReactiveObject
             var searchList = db.FindCustomerBySearch(searchText);
             Subheader = $"Anzahl Personen: {searchList.Count}";
             AllCustomers = new ObservableCollection<Customer>(searchList);
-            SearchText = "";
         }
         else
         {
-            SearchText = "";
             CreateCustomerlist();
         }
     }

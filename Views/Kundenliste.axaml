@@ -38,9 +38,6 @@
                              Foreground="DimGray" 
                              BorderBrush="LightGray" 
                              Watermark="Suche...">
-                        <TextBox.KeyBindings>
-                            <KeyBinding Gesture="Enter" Command="{Binding SearchCommand}" CommandParameter="{Binding Text, ElementName=Suche}" />
-                        </TextBox.KeyBindings>
                     </TextBox>
                 </StackPanel>
                 
